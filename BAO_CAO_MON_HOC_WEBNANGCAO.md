@@ -6,8 +6,8 @@
 # BÁO CÁO BÀI TẬP LỚN / ĐỒ ÁN MÔN HỌC: LẬP TRÌNH WEB NÂNG CAO
 
 * **Tên Đề Tài:** XÂY DỰNG NỀN TẢNG MẠNG XÃ HỘI CHIA SẺ CÔNG THỨC ẨM THỰC BẾP GIA ĐÌNH COOKIO THEO MÔ HÌNH PHÂN LỚP (NESTJS & REACT)
-* **Tên Repository GitHub:** `webnangcao`
-* **Nhóm Sinh Viên:** Nhóm 4 Thành Viên
+* **Tên Repository GitHub:** `cooking-webnangcao` (`https://github.com/XuanTu138960/cooking-webnangcao`)
+* **Nhóm Sinh Viên:** Nhóm 4 Thành Viên (Trưởng nhóm: XuanTu138960)
 * **Giảng Viên Hướng Dẫn:** Bộ môn Lập Trình Web Nâng Cao - Trường Đại học Phenikaa
 * **Năm học:** 2025 - 2026
 
@@ -418,7 +418,7 @@ Hệ thống kiểm thử đơn vị được viết bằng framework Jest:
 * **Khoa:** Công nghệ Thông tin
 * **Tên Đề Tài:** Mạng Xã Hội Ẩm Thực Bếp Gia Đình Cookio (Web Nâng Cao)
 * **Link Demo Sản Phẩm (Dưới 8 phút):** `https://youtu.be/phenikaa-cookio-demo-webnangcao` *(Thời lượng video: 06 phút 30 giây)*
-* **Link GitHub Repository của Nhóm:** `https://github.com/MinhPhuong292005/webnangcao` (hoặc repo `webnangcao` chính thức của nhóm).
+* **Link GitHub Repository của Nhóm:** `https://github.com/XuanTu138960/cooking-webnangcao`
 
 ---
 
