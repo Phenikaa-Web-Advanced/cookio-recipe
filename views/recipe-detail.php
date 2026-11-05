@@ -88,7 +88,7 @@ if ($recipe) {
     // 4. Like state
     $isLiked = false;
     if (is_logged_in()) {
-        $stmtLiked = db()->prepare('SELECT id FROM recipe_likes WHERE user_id = ? AND recipe_id = ?');
+        $stmtLiked = db()->prepare('SELECT 1 FROM recipe_likes WHERE user_id = ? AND recipe_id = ?');
         $stmtLiked->execute([(int) $_SESSION['user_id'], (int) $recipe['id']]);
         $isLiked = (bool) $stmtLiked->fetch();
     }

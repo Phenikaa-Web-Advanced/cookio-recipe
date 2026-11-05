@@ -35,7 +35,7 @@ $followersCount = (int) db()->query("SELECT COUNT(*) FROM follows WHERE author_i
 
 // Total Likes received on recipes posted by this author (Khớp yêu cầu: Lượt thích tương tác)
 $stmtTotalLikes = db()->prepare("
-    SELECT COUNT(rl.id) 
+    SELECT COUNT(*) 
     FROM recipe_likes rl
     JOIN recipes r ON r.id = rl.recipe_id
     WHERE r.author_id = ?

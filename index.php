@@ -201,9 +201,9 @@ $ingredientsList = [
     ['name' => 'Cà chua', 'q' => 'cà chua', 'img' => 'assets/images/ingredients/ca-chua.jpg'],
     ['name' => 'Các loại ốc', 'q' => 'ốc', 'img' => 'assets/images/ingredients/oc.jpg'],
     ['name' => 'Cua', 'q' => 'cua', 'img' => 'assets/images/ingredients/cua.jpg'],
-    ['name' => 'Đậu hũ', 'q' => 'đậu', 'img' => 'assets/images/ingredients/dau-hu.jpg'],
+    ['name' => 'Đậu hũ', 'q' => 'đậu hũ', 'img' => 'assets/images/ingredients/dau-hu.jpg'],
     ['name' => 'Dứa', 'q' => 'dứa', 'img' => 'assets/images/ingredients/dua.jpg'],
-    ['name' => 'Dưa chua', 'q' => 'dưa', 'img' => 'assets/images/ingredients/dua-chua.jpg'],
+    ['name' => 'Dưa chua', 'q' => 'dưa chua', 'img' => 'assets/images/ingredients/dua-chua.jpg'],
     ['name' => 'Tôm', 'q' => 'tôm', 'img' => 'assets/images/ingredients/tom.jpg'],
     ['name' => 'Gà', 'q' => 'gà', 'img' => 'assets/images/ingredients/thit-ga.jpg'],
 ];

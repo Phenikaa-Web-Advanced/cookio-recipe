@@ -220,7 +220,7 @@ function runDailyCommunityBot(bool $force = false): array
         // BƯỚC 3: TƯƠNG TÁC THẢ TIM MÓN ĂN (RECIPE LIKES)
         // =================================================================
         $allRecipes = $db->query('SELECT id, author_id, title FROM recipes WHERE status = "approved" ORDER BY id DESC LIMIT 20')->fetchAll();
-        $checkLikeStmt = $db->prepare('SELECT id FROM recipe_likes WHERE recipe_id = ? AND user_id = ?');
+        $checkLikeStmt = $db->prepare('SELECT 1 FROM recipe_likes WHERE recipe_id = ? AND user_id = ?');
         $insLikeStmt = $db->prepare('INSERT INTO recipe_likes (recipe_id, user_id, created_at) VALUES (?, ?, ?)');
         $insSavedStmt = $db->prepare('INSERT IGNORE INTO saved_recipes (user_id, recipe_id, created_at) VALUES (?, ?, ?)');
         $updateLikesCountStmt = $db->prepare('UPDATE recipes SET likes_count = (SELECT COUNT(*) FROM recipe_likes WHERE recipe_id = ?) WHERE id = ?');

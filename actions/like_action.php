@@ -72,7 +72,7 @@ if (!$recipe) {
 }
 
 // Toggle like
-$stmtLike = db()->prepare('SELECT id FROM recipe_likes WHERE recipe_id = ? AND user_id = ?');
+$stmtLike = db()->prepare('SELECT 1 FROM recipe_likes WHERE recipe_id = ? AND user_id = ?');
 $stmtLike->execute([$recipeId, $userId]);
 $likedRow = $stmtLike->fetch();
 

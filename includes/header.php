@@ -237,14 +237,20 @@ if (isset($_SESSION['user_id'])) {
                 </a>
             </div>
 
-            <!-- Top Search Pill (Khớp yêu cầu: Xóa logo/nút màu nâu trong thanh tìm kiếm) -->
+            <!-- Top Search Pill (Thiết kế thanh tìm kiếm chuyên nghiệp) -->
             <div class="yummy-top-search-wrap">
                 <form method="get" action="<?= BASE_URL ?>/index.php" class="yummy-search-form" id="yummySearchForm">
-                    <svg class="y-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="y-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
-                    <input type="text" name="q" placeholder="Tìm theo tên món hoặc nguyên liệu..." value="<?= e($_GET['q'] ?? '') ?>" autocomplete="off" onclick="openHorizontalSearch()">
+                    <input type="text" name="q" placeholder="Tìm kiếm món ăn, nguyên liệu, bí quyết..." value="<?= e($_GET['q'] ?? '') ?>" autocomplete="off" onclick="openHorizontalSearch()">
+                    <button type="submit" class="btn-yummy-search-go" title="Tìm kiếm" aria-label="Tìm kiếm">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </button>
                 </form>
             </div>
         </div>

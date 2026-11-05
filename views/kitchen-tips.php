@@ -31,7 +31,7 @@ $featuredTips = [
     [
         'id' => 3,
         'title' => 'Cách hầm gân bò nhanh mềm siêu cấp dễ dàng cho chị em',
-        'image' => 'assets/images/real_dishes/hero-dish-4.jpg',
+        'image' => 'assets/images/real_dishes/ham-gan-bo.jpg',
         'time' => '45p',
         'difficulty' => 'Trung bình',
         'summary' => 'Mẹo cho đá lạnh sốc nhiệt hoặc vài lát dứa/chanh giúp gân bò mềm giòn sần sật trong nửa thời gian.',
@@ -41,7 +41,7 @@ $featuredTips = [
     [
         'id' => 4,
         'title' => 'Cách ướp thịt ba chỉ nướng ngon đặc biệt ai cũng mê',
-        'image' => 'assets/images/real_dishes/hero-dish-3.jpg',
+        'image' => 'assets/images/real_dishes/thit-ba-chi-nuong.jpg',
         'time' => '20p',
         'difficulty' => 'Dễ',
         'summary' => 'Bí quyết ướp thịt ba chỉ riềng mẻ hoặc sốt sa tế hành tỏi thơm lừng.',
@@ -51,7 +51,7 @@ $featuredTips = [
     [
         'id' => 5,
         'title' => 'Cách làm thịt heo quay giòn bì tại nhà ngon bất bại',
-        'image' => 'assets/images/real_dishes/hero-dish-5.jpg',
+        'image' => 'assets/images/real_dishes/heo-quay-gion-bi.jpg',
         'time' => '40p',
         'difficulty' => 'Trung bình',
         'summary' => 'Bí quyết xăm đều mặt bì và quét hỗn hợp giấm + muối hạt để bì nổ cốm giòn tan rôm rốp.',
@@ -61,7 +61,7 @@ $featuredTips = [
     [
         'id' => 6,
         'title' => 'Bí quyết làm chân gà sốt Thái chua cay đậm đà chuẩn vị',
-        'image' => 'assets/images/real_dishes/hero-dish-6.jpg',
+        'image' => 'assets/images/real_dishes/chan-ga-sot-thai.jpg',
         'time' => '35p',
         'difficulty' => 'Dễ',
         'summary' => 'Công thức sốt Thái chua ngọt sánh sệt, chân gà giòn sần sật ngấm đẫm sả ớt cóc non.',
@@ -71,7 +71,7 @@ $featuredTips = [
     [
         'id' => 7,
         'title' => 'Mẹo luộc gà cúng cánh tiên da vàng óng không nứt',
-        'image' => 'assets/images/real_dishes/hero-dish-7.jpg',
+        'image' => 'assets/images/real_dishes/ga-luoc-cung.png',
         'time' => '30p',
         'difficulty' => 'Dễ',
         'summary' => 'Kỹ thuật buộc gà cánh tiên, luộc nước lạnh ngập con và quét mỡ nghệ da bóng bẩy.',
@@ -81,7 +81,7 @@ $featuredTips = [
     [
         'id' => 8,
         'title' => 'Cách làm nước màu kho thịt cá lên màu đẹp tự nhiên',
-        'image' => 'assets/images/real_dishes/hero-dish-8.jpg',
+        'image' => 'assets/images/real_dishes/nuoc-mau-kho-thit-ca.jpg',
         'time' => '15p',
         'difficulty' => 'Dễ',
         'summary' => 'Bí quyết thắng đường thốt nốt hoặc nước dừa xiêm tạo màu cánh gián thơm phức không đắng.',
@@ -99,9 +99,9 @@ $ingredients = [
     ['name' => 'Cà chua', 'q' => 'cà chua', 'img' => 'assets/images/ingredients/ca-chua.jpg'],
     ['name' => 'Các loại ốc', 'q' => 'ốc', 'img' => 'assets/images/ingredients/oc.jpg'],
     ['name' => 'Cua', 'q' => 'cua', 'img' => 'assets/images/ingredients/cua.jpg'],
-    ['name' => 'Đậu hũ', 'q' => 'đậu', 'img' => 'assets/images/ingredients/dau-hu.jpg'],
+    ['name' => 'Đậu hũ', 'q' => 'đậu hũ', 'img' => 'assets/images/ingredients/dau-hu.jpg'],
     ['name' => 'Dứa', 'q' => 'dứa', 'img' => 'assets/images/ingredients/dua.jpg'],
-    ['name' => 'Dưa chua', 'q' => 'dưa', 'img' => 'assets/images/ingredients/dua-chua.jpg'],
+    ['name' => 'Dưa chua', 'q' => 'dưa chua', 'img' => 'assets/images/ingredients/dua-chua.jpg'],
     ['name' => 'Tôm', 'q' => 'tôm', 'img' => 'assets/images/ingredients/tom.jpg'],
     ['name' => 'Gà', 'q' => 'gà', 'img' => 'assets/images/ingredients/thit-ga.jpg'],
 ];
@@ -128,7 +128,7 @@ $allTipsList = [
         'id' => 3,
         'title' => 'Cách hầm gân bò nhanh mềm siêu cấp dễ dàng cho chị em',
         'desc' => 'Mẹo sốc nhiệt đá lạnh và dứa tươi ninh gân bò mềm giòn sần sật — bí quyết Cookio.',
-        'image' => 'assets/images/real_dishes/hero-dish-4.jpg',
+        'image' => 'assets/images/real_dishes/ham-gan-bo.jpg',
         'time' => '45p',
         'difficulty' => 'Trung bình'
     ],
@@ -136,7 +136,7 @@ $allTipsList = [
         'id' => 4,
         'title' => 'Cách ướp thịt ba chỉ nướng ngon đặc biệt ai cũng mê',
         'desc' => 'Tỷ lệ vàng 7:3 kèm mayonnaise và sa tế ướp ba chỉ mềm thơm không khô — bí quyết Cookio.',
-        'image' => 'assets/images/real_dishes/hero-dish-3.jpg',
+        'image' => 'assets/images/real_dishes/thit-ba-chi-nuong.jpg',
         'time' => '20p',
         'difficulty' => 'Dễ'
     ],
@@ -144,7 +144,7 @@ $allTipsList = [
         'id' => 5,
         'title' => 'Cách làm thịt heo quay giòn bì tại nhà ngon bất bại',
         'desc' => 'Bí quyết xăm đều mặt bì và quét giấm muối hạt cho bì nổ cốm giòn rụm — bí quyết Cookio.',
-        'image' => 'assets/images/real_dishes/hero-dish-5.jpg',
+        'image' => 'assets/images/real_dishes/heo-quay-gion-bi.jpg',
         'time' => '40p',
         'difficulty' => 'Trung bình'
     ],
@@ -152,7 +152,7 @@ $allTipsList = [
         'id' => 6,
         'title' => 'Bí quyết làm chân gà sốt Thái chua cay đậm đà chuẩn vị',
         'desc' => 'Công thức sốt Thái chua cay ngọt sánh sệt quyện chân gà giòn sần sật — bí quyết Cookio.',
-        'image' => 'assets/images/real_dishes/hero-dish-6.jpg',
+        'image' => 'assets/images/real_dishes/chan-ga-sot-thai.jpg',
         'time' => '35p',
         'difficulty' => 'Dễ'
     ],
@@ -160,7 +160,7 @@ $allTipsList = [
         'id' => 7,
         'title' => 'Mẹo luộc gà cúng cánh tiên da vàng óng không nứt',
         'desc' => 'Cách buộc thế gà cánh tiên, luộc nước lạnh ủ om da giòn quét mỡ nghệ — bí quyết Cookio.',
-        'image' => 'assets/images/real_dishes/hero-dish-7.jpg',
+        'image' => 'assets/images/real_dishes/ga-luoc-cung.png',
         'time' => '30p',
         'difficulty' => 'Dễ'
     ],
@@ -168,7 +168,7 @@ $allTipsList = [
         'id' => 8,
         'title' => 'Cách làm nước màu kho thịt cá lên màu đẹp tự nhiên',
         'desc' => 'Kỹ thuật thắng đường thốt nốt cùng nước dừa cho màu cánh gián không đắng — bí quyết Cookio.',
-        'image' => 'assets/images/real_dishes/hero-dish-8.jpg',
+        'image' => 'assets/images/real_dishes/nuoc-mau-kho-thit-ca.jpg',
         'time' => '15p',
         'difficulty' => 'Dễ'
     ],
