@@ -2,18 +2,33 @@
 
 declare(strict_types=1);
 
+if (session_status() !== PHP_SESSION_ACTIVE && !headers_sent()) {
+    session_start();
+}
+
 if (!defined('BASE_URL')) {
-    if (PHP_SAPI === 'cli-server') {
+    $envBase = getenv('BASE_URL');
+    if ($envBase !== false) {
+        define('BASE_URL', $envBase);
+    } elseif (PHP_SAPI === 'cli-server') {
         define('BASE_URL', '');
     } else {
         define('BASE_URL', '/cooking-website');
     }
 }
 
-const DB_HOST = '127.0.0.1;port=3307';
-const DB_NAME = 'cookio_db';
-const DB_USER = 'root';
-const DB_PASS = '';
+if (!defined('DB_HOST')) {
+    define('DB_HOST', getenv('DB_HOST') ?: '127.0.0.1;port=3307');
+}
+if (!defined('DB_NAME')) {
+    define('DB_NAME', getenv('DB_NAME') ?: 'cookio_db');
+}
+if (!defined('DB_USER')) {
+    define('DB_USER', getenv('DB_USER') ?: 'root');
+}
+if (!defined('DB_PASS')) {
+    define('DB_PASS', getenv('DB_PASS') !== false ? getenv('DB_PASS') : '');
+}
 const UPLOAD_DIR = __DIR__ . '/../uploads/recipes/';
 const MAX_UPLOAD_SIZE = 5 * 1024 * 1024;
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];

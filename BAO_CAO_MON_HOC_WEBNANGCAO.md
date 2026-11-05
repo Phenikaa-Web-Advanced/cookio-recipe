@@ -9,7 +9,7 @@
 * **Tên Repository GitHub:** `cooking-webnangcao` (`https://github.com/XuanTu138960/cooking-webnangcao`)
 * **Nhóm Sinh Viên:** Nhóm 4 Thành Viên (Trưởng nhóm: XuanTu138960)
 * **Giảng Viên Hướng Dẫn:** Bộ môn Lập Trình Web Nâng Cao - Trường Đại học Phenikaa
-* **Năm học:** 2025 - 2026
+* **Năm học:** 2026 - 2027
 
 ---
 
@@ -34,11 +34,8 @@ Theo quy định nhóm 4 sinh viên, đồ án yêu cầu tối thiểu **16 câ
 
 | STT | Họ và Tên | Mã Sinh Viên | Vai trò phân công | Số lượng Stories | Tỷ lệ % đóng góp |
 | :---: | :--- | :---: | :--- | :---: | :---: |
-| 1 | **Nguyễn Văn A** | `23010538` | Trưởng nhóm - Phân hệ Xác thực & Tài khoản | 4 stories | 25% |
-| 2 | **Trần Thị B** | `23010539` | Thành viên - Phân hệ Quản lý & Khám phá Công thức | 4 stories | 25% |
-| 3 | **Lê Văn C** | `23010540` | Thành viên - Phân hệ Tương tác Cộng đồng & Đánh giá | 4 stories | 25% |
-| 4 | **Phạm Thị D** | `23010541` | Thành viên - Phân hệ Quản trị viên (Admin) & Kiểm duyệt | 4 stories | 25% |
-| **Tổng** | **4 Thành viên** | - | **Toàn bộ hệ thống Cookio** | **16 stories** | **100%** |
+|  | **Nguyễn Xuân Tú** | `23010538` | Trưởng nhóm - Phân hệ Xác thực & Tài khoản | 4 stories | 100% |
+
 
 ---
 
@@ -493,7 +490,7 @@ Các thành viên trong nhóm thực hiện commit code đều đặn, rõ ràng
 ---
 
 ### 10.3. Điểm chuyên cần học tập (Câu 10c - 0.5 điểm)
-* Cả 4 sinh viên trong nhóm luôn tham gia đầy đủ 100% các buổi học lý thuyết và thực hành trên phòng máy của môn Lập trình Web Nâng Cao.
+* Cả 3 sinh viên trong nhóm luôn tham gia đầy đủ 100% các buổi học lý thuyết và thực hành trên phòng máy của môn Lập trình Web Nâng Cao.
 * Luôn chuẩn bị bài trước khi đến lớp, tích cực tương tác và trả lời các câu hỏi tình huống của giảng viên.
 * Điểm chuyên cần tự đánh giá và đối chiếu điểm danh của giảng viên: **Đạt điểm tối đa (0.5 / 0.5 điểm)**.
 
@@ -501,4 +498,4 @@ Các thành viên trong nhóm thực hiện commit code đều đặn, rõ ràng
 *Hà Nội, Ngày 31 Tháng 10 Năm 2026*  
 **ĐẠI DIỆN NHÓM SINH VIÊN**  
 *(Ký và ghi rõ họ tên)*  
-**Nguyễn Văn A**
+**Nguyễn Xuân Tú**

@@ -47,19 +47,25 @@
 
 ##  Cài Đặt & Khởi Chạy
 
-### Yêu Cầu
-- PHP 8.0 trở lên.
-- MySQL 5.7+ hoặc MariaDB 10.4+ (XAMPP).
+### Cách 1: Khởi Chạy Nhanh Bằng Docker (Khuyến nghị - Dữ liệu mới & hoàn toàn độc lập)
+Dự án được cấu hình chạy Docker cô lập hoàn toàn (cổng riêng `8088`, database MariaDB cổng `3308`, volume độc lập `webnangcao_cooking_db_data`), tránh trùng lặp dữ liệu hay xung đột cổng với bất kỳ dự án nào khác.
 
-### Các Bước Cài Đặt
-1. **Khởi động MySQL** trong XAMPP Control Panel.
-2. **Import cơ sở dữ liệu**:
-   - Sử dụng phpMyAdmin hoặc MySQL CLI import tệp: `sql/cookio_db.sql`.
-3. **Khởi động máy chủ phát triển**:
+1. **Khởi chạy container**:
+   ```bash
+   docker compose up -d --build
+   ```
+2. **Truy cập hệ thống**: Mở trình duyệt vào **[http://localhost:8088](http://localhost:8088)**.
+3. *Cơ sở dữ liệu sẽ tự động được khởi tạo sạch sẽ và nạp toàn bộ dữ liệu mẫu ban đầu từ `sql/cookio_db.sql`.*
+
+### Cách 2: Khởi Chạy Cục Bộ Thủ Công (XAMPP / CLI)
+- **Yêu cầu:** PHP 8.0 trở lên, MySQL 5.7+ hoặc MariaDB 10.4+.
+1. Khởi động MySQL trong XAMPP hoặc MariaDB cục bộ.
+2. Import cơ sở dữ liệu từ tệp `sql/cookio_db.sql` vào database `cookio_db`.
+3. Khởi động máy chủ:
    ```bash
    php -S localhost:8000
    ```
-4. **Truy cập hệ thống**: Mở trình duyệt vào **[http://localhost:8000](http://localhost:8000)**.
+4. Truy cập **[http://localhost:8000](http://localhost:8000)**.
 
 ---
 
