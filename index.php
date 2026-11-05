@@ -25,11 +25,32 @@ $where = ["r.status = 'approved'"];
 $params = [];
 
 if ($searchQuery !== '') {
-    $where[] = "(r.title LIKE ? OR r.ingredients LIKE ? OR r.description LIKE ?)";
-    $like = '%' . $searchQuery . '%';
-    $params[] = $like;
-    $params[] = $like;
-    $params[] = $like;
+    $cleanQuery = trim($searchQuery);
+    $words = array_values(array_filter(preg_split('/\s+/', $cleanQuery)));
+
+    if (count($words) === 1) {
+        $escapedWord = preg_quote($words[0], '/');
+        // MariaDB boundary matching [[:<:]] and [[:>:]] with (?i) case-insensitivity
+        // Guarantees exact word isolation (e.g., 'bò' strictly matches 'bò' and never 'bông', 'bột', 'bánh')
+        $boundaryPattern = '(?i)[[:<:]]' . $escapedWord . '[[:>:]]';
+        $where[] = "(r.title REGEXP ? OR r.category REGEXP ?)";
+        $params[] = $boundaryPattern;
+        $params[] = $boundaryPattern;
+    } else {
+        $phrasePattern = '(?i)' . preg_quote($cleanQuery, '/');
+        $wordConditions = [];
+        $wordParams = [];
+        foreach ($words as $w) {
+            $wordConditions[] = "r.title REGEXP ?";
+            $wordParams[] = '(?i)[[:<:]]' . preg_quote($w, '/') . '[[:>:]]';
+        }
+        $where[] = "((r.title REGEXP ?) OR (" . implode(' AND ', $wordConditions) . ") OR r.category REGEXP ?)";
+        $params[] = $phrasePattern;
+        foreach ($wordParams as $wp) {
+            $params[] = $wp;
+        }
+        $params[] = $phrasePattern;
+    }
 }
 
 if ($selectedCategory !== '') {

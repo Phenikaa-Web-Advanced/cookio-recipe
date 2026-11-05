@@ -73,4 +73,4 @@ if ($redirectTo !== '' && !str_contains($redirectTo, ':') && !str_starts_with($r
     redirect($redirectTo);
 }
 
-redirect($user['role'] === 'admin' ? 'admin/index.php' : 'index.php?success=login');
+redirect('index.php?success=login');

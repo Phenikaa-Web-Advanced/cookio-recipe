@@ -355,6 +355,14 @@ if (isset($_SESSION['user_id'])) {
                         + Viết món mới
                     </button>
 
+                    <!-- Nút Chuông Thông Báo (Click mở form Đăng nhập nếu chưa đăng nhập) -->
+                    <button type="button" class="notification-btn" title="Thông báo" aria-label="Thông báo" data-open-login>
+                        <svg class="cookio-bell-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </button>
+
                     <!-- Nút Đăng nhập -->
                     <button type="button" class="y-pill-btn-brown" data-open-login style="padding: 0.45rem 1.15rem; font-size: 0.88rem;">
                         Đăng nhập

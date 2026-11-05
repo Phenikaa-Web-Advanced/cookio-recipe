@@ -533,6 +533,16 @@ function initDarkMode() {
 /* ==========================================================================
    6. SOCIAL NOTIFICATIONS CENTER
    ========================================================================== */
+window.toggleNotificationsDropdown = function() {
+    const notifDropdown = document.getElementById('notificationDropdown');
+    if (!notifDropdown) return;
+    const isOpen = notifDropdown.style.display === 'block';
+    notifDropdown.style.display = isOpen ? 'none' : 'block';
+    if (!isOpen) {
+        loadNotifications();
+    }
+};
+
 function initNotifications() {
     const notifBtn = document.getElementById('btnNotifications');
     const notifDropdown = document.getElementById('notificationDropdown');
@@ -1111,11 +1121,23 @@ window.switchAuthTab = function(tab) {
     });
 
     if (tab === 'login') {
-        if (loginForm) loginForm.classList.remove('hidden');
-        if (registerForm) registerForm.classList.add('hidden');
+        if (loginForm) {
+            loginForm.classList.remove('hidden');
+            loginForm.style.display = 'flex';
+        }
+        if (registerForm) {
+            registerForm.classList.add('hidden');
+            registerForm.style.display = 'none';
+        }
     } else {
-        if (loginForm) loginForm.classList.add('hidden');
-        if (registerForm) registerForm.classList.remove('hidden');
+        if (loginForm) {
+            loginForm.classList.add('hidden');
+            loginForm.style.display = 'none';
+        }
+        if (registerForm) {
+            registerForm.classList.remove('hidden');
+            registerForm.style.display = 'flex';
+        }
     }
 };
 

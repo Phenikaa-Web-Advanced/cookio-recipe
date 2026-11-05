@@ -16,19 +16,37 @@ if ($action === 'search') {
         exit;
     }
 
-    $term = '%' . $q . '%';
-    $stmt = db()->prepare("
+    $words = array_values(array_filter(preg_split('/\s+/', $q)));
+    if (count($words) === 1) {
+        $pattern = '(?i)[[:<:]]' . preg_quote($words[0], '/') . '[[:>:]]';
+        $searchWhere = "(r.title REGEXP ? OR r.category REGEXP ?)";
+        $searchParams = [$pattern, $pattern];
+    } else {
+        $phrasePattern = '(?i)' . preg_quote($q, '/');
+        $wordConds = [];
+        $searchParams = [$phrasePattern];
+        foreach ($words as $w) {
+            $wordConds[] = "r.title REGEXP ?";
+            $searchParams[] = '(?i)[[:<:]]' . preg_quote($w, '/') . '[[:>:]]';
+        }
+        $searchParams[] = $phrasePattern;
+        $searchWhere = "((r.title REGEXP ?) OR (" . implode(' AND ', $wordConds) . ") OR r.category REGEXP ?)";
+    }
+
+    $sql = "
         SELECT r.id, r.title, r.category, r.cooking_time, r.servings, r.image_url, r.calories,
                u.username AS author_name,
                (SELECT COUNT(*) FROM recipe_likes rl WHERE rl.recipe_id = r.id) AS likes_count
         FROM recipes r
         JOIN users u ON u.id = r.author_id
         WHERE r.status = 'approved'
-          AND (r.title LIKE ? OR r.ingredients LIKE ? OR r.category LIKE ?)
-        ORDER BY r.views_count DESC, r.created_at DESC
+          AND $searchWhere
+        ORDER BY (CASE WHEN r.title REGEXP ? THEN 0 ELSE 1 END), r.views_count DESC, r.created_at DESC
         LIMIT 6
-    ");
-    $stmt->execute([$term, $term, $term]);
+    ";
+    $searchParams[] = (count($words) === 1 ? '(?i)[[:<:]]' . preg_quote($words[0], '/') . '[[:>:]]' : '(?i)' . preg_quote($q, '/'));
+    $stmt = db()->prepare($sql);
+    $stmt->execute($searchParams);
     $rows = $stmt->fetchAll();
 
     $results = [];
