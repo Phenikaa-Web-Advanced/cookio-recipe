@@ -5087,6 +5087,37 @@ input:focus, textarea:focus, select:focus {
     box-shadow: 0 4px 12px rgba(74, 28, 23, 0.45) !important;
 }
 
+/* Nút vào phòng quản lý của Admin (Sửa từ hình tròn trắng) */
+.btn-admin-room {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.45rem !important;
+    padding: 0.45rem 1.1rem !important;
+    border-radius: 9999px !important;
+    background: #3e1713 !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    font-weight: 700 !important;
+    font-size: 0.88rem !important;
+    box-shadow: 0 3px 10px rgba(62, 23, 19, 0.2) !important;
+    transition: all 0.2s ease !important;
+    white-space: nowrap !important;
+}
+.btn-admin-room:hover {
+    background: #ea580c !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 14px rgba(234, 88, 12, 0.3) !important;
+    color: #ffffff !important;
+}
+[data-theme="dark"] .btn-admin-room {
+    background: #ea580c !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 14px rgba(234, 88, 12, 0.4) !important;
+}
+[data-theme="dark"] .btn-admin-room:hover {
+    background: #c2410c !important;
+}
+
 /* Notification Bell Button (Khớp Ảnh 3: Hình chiếc chuông đen đặc) */
 .notification-btn {
     background: #ffffff !important;

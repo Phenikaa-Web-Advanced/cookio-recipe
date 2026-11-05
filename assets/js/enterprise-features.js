@@ -533,100 +533,55 @@ function initDarkMode() {
 /* ==========================================================================
    6. SOCIAL NOTIFICATIONS CENTER
    ========================================================================== */
-window.toggleNotificationsDropdown = function() {
+window.toggleNotificationsDropdown = function(e) {
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
     const notifDropdown = document.getElementById('notificationDropdown');
     if (!notifDropdown) return;
-    const isOpen = notifDropdown.style.display === 'block';
-    notifDropdown.style.display = isOpen ? 'none' : 'block';
-    if (!isOpen) {
-        loadNotifications();
-    }
+    const isVisible = notifDropdown.style.display === 'block';
+    notifDropdown.style.display = isVisible ? 'none' : 'block';
 };
 
 function initNotifications() {
     const notifBtn = document.getElementById('btnNotifications');
     const notifDropdown = document.getElementById('notificationDropdown');
-    const notifBadge = document.getElementById('notifBadge');
-    const notifList = document.getElementById('notificationList');
 
     if (!notifBtn || !notifDropdown) return;
 
-    // Toggle dropdown
-    notifBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isOpen = notifDropdown.style.display === 'block';
-        notifDropdown.style.display = isOpen ? 'none' : 'block';
-        if (!isOpen) {
-            loadNotifications();
-        }
-    });
-
-    // Close when clicking outside
+    // Đóng dropdown khi click ra ngoài mà không bị mất dữ liệu
     document.addEventListener('click', (e) => {
         if (!notifBtn.contains(e.target) && !notifDropdown.contains(e.target)) {
             notifDropdown.style.display = 'none';
         }
     });
-
-    // Initial load
-    loadNotifications();
 }
 
 window.currentNotifFilter = 'all';
 
-async function loadNotifications(filterType = window.currentNotifFilter || 'all') {
-    window.currentNotifFilter = filterType;
-    const baseUrl = window.BASE_URL || '';
-    const notifBadge = document.getElementById('notifBadge');
-    const notifList = document.getElementById('notificationList');
-
-    try {
-        const res = await fetch(`${baseUrl}/actions/notification_action.php?action=list&type=${encodeURIComponent(filterType)}`);
-        if (res.status === 401) return; // not logged in
-
-        const data = await res.json();
-        if (data.success) {
-            // Update badge
-            if (notifBadge && filterType === 'all') {
-                if (data.unread_count > 0) {
-                    notifBadge.textContent = data.unread_count > 9 ? '9+' : data.unread_count;
-                    notifBadge.style.display = 'flex';
-                } else {
-                    notifBadge.style.display = 'none';
-                }
-            }
-
-            // Render list
-            if (notifList) {
-                if (!data.notifications || data.notifications.length === 0) {
-                    notifList.innerHTML = `<div style="padding: 2rem 1rem; text-align: center; color: #94a3b8; font-size: 0.88rem;">Chưa có thông báo nào trong mục này.</div>`;
-                    return;
-                }
-
-                let html = '';
-                data.notifications.forEach(n => {
-                    html += `
-                        <a href="${n.target_url}" class="notification-item ${!n.is_read ? 'is-unread' : ''}" onclick="markNotificationRead(${n.id})">
-                            <span class="notif-icon">${n.icon}</span>
-                            <div class="notif-body">
-                                <strong>${escapeHtml(n.actor_name)}</strong> ${escapeHtml(n.content)}
-                                <span class="notif-time">🕒 ${escapeHtml(n.created_at)}</span>
-                            </div>
-                        </a>
-                    `;
-                });
-                notifList.innerHTML = html;
-            }
-        }
-    } catch (err) {
-        console.error('Notification load error:', err);
-    }
-}
-
 window.filterNotifications = function(type, btnEl) {
     document.querySelectorAll('.notif-tab').forEach(el => el.classList.remove('is-active'));
     if (btnEl) btnEl.classList.add('is-active');
-    loadNotifications(type);
+
+    const items = document.querySelectorAll('#notificationList .notification-item');
+    let visibleCount = 0;
+    items.forEach(item => {
+        const itemType = item.getAttribute('data-type') || 'all';
+        let match = false;
+        if (type === 'all') match = true;
+        else if (type === 'like' && itemType === 'like') match = true;
+        else if (type === 'comment' && (itemType === 'comment' || itemType === 'cooksnap')) match = true;
+        else if (type === 'follow' && itemType === 'follow') match = true;
+
+        item.style.display = match ? 'flex' : 'none';
+        if (match) visibleCount++;
+    });
+
+    const emptyNotice = document.getElementById('notifEmptyFilterNotice');
+    if (emptyNotice) {
+        emptyNotice.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
 };
 
 window.markNotificationRead = async function(notifId) {

@@ -11,9 +11,12 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 
-// Run silent daily engagement and autonomous community bot check (once every 24 hours)
-run_daily_engagement();
-runDailyCommunityBot();
+// Run silent daily engagement and autonomous community bot check (tối ưu: chỉ kiểm tra 1 lần/giờ theo phiên để đăng nhập và tải trang cực nhanh)
+if (empty($_SESSION['daily_simulation_checked']) || (time() - (int)$_SESSION['daily_simulation_checked']) > 3600) {
+    run_daily_engagement();
+    runDailyCommunityBot();
+    $_SESSION['daily_simulation_checked'] = time();
+}
 
 // Counters for Cookpad sidebar
 $sidebarTotal = (int) db()->query("SELECT COUNT(*) FROM recipes WHERE status = 'approved'")->fetchColumn();
@@ -304,41 +307,92 @@ if (isset($_SESSION['user_id'])) {
                 </a>
             </nav>
 
-            <!-- Right Action Buttons: Viết món mới & Notification Bell & Auth -->
-            <div class="yummy-nav-actions">
+            <!-- Right Action Buttons: Viết món mới & Nút vào phòng quản lý & Notification Bell & Auth -->
+            <div class="yummy-nav-actions" style="display: flex; align-items: center; gap: 0.65rem;">
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <?php
                     $headerUserId = (int) $_SESSION['user_id'];
                     $headerUnreadCount = (int) db()->query("SELECT COUNT(*) FROM notifications WHERE user_id = $headerUserId AND is_read = 0")->fetchColumn();
+                    $stmtHN = db()->prepare("
+                        SELECT n.*, u.username AS actor_name
+                        FROM notifications n
+                        JOIN users u ON u.id = n.actor_id
+                        WHERE n.user_id = ?
+                        ORDER BY n.created_at DESC
+                        LIMIT 30
+                    ");
+                    $stmtHN->execute([$headerUserId]);
+                    $headerNotifs = $stmtHN->fetchAll();
                     ?>
                     <a href="<?= BASE_URL ?>/views/create-recipe.php" class="button button-create" style="padding: 0.45rem 1.1rem; border-radius: 9999px; font-weight: 700; font-size: 0.88rem;">
                         + Viết món mới
                     </a>
 
-                    <!-- Notification Bell (Khớp 100% Ảnh chiếc chuông đen, có quả lắc tách rời, tương phản cao) -->
-                    <div class="notification-wrapper">
-                        <button type="button" class="notification-btn" id="btnNotifications" title="Thông báo" aria-label="Thông báo" onclick="toggleNotificationsDropdown()" style="width: 42px; height: 42px; border-radius: 50%; background: #ffffff; border: 2px solid #ea580c; display: inline-flex; align-items: center; justify-content: center; color: #3e1713; cursor: pointer; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.12); flex-shrink: 0;">
-                            <svg class="cookio-bell-icon" width="22" height="22" viewBox="0 0 24 24" fill="#3e1713" style="display: block; width: 22px; height: 22px; color: #3e1713; fill: #3e1713;">
-                                <path d="M12 2a2 2 0 0 0-2 2c0 .12.01.24.04.35C7.45 5.23 5.5 7.89 5.5 11v4.5l-2 2V19h17v-1.5l-2-2V11c0-3.11-1.95-5.77-4.54-6.65.03-.11.04-.23.04-.35a2 2 0 0 0-2-2z"/>
-                                <path d="M9.5 20.5a2.5 2.5 0 0 0 5 0h-5z"/>
+                    <!-- Nút vào phòng quản lý của admin (Sửa hình tròn trắng thành nút phòng quản lý theo đúng yêu cầu) -->
+                    <a href="<?= BASE_URL ?>/admin/index.php" class="btn-admin-room" title="Vào phòng quản lý của Admin" style="display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.45rem 1.1rem; border-radius: 9999px; background: #3e1713; color: #ffffff; text-decoration: none; font-weight: 700; font-size: 0.88rem; box-shadow: 0 3px 10px rgba(62, 23, 19, 0.2); transition: all 0.2s; white-space: nowrap;" onmouseover="this.style.background='#ea580c';" onmouseout="this.style.background='#3e1713';">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="9" y1="3" x2="9" y2="21"></line>
+                        </svg>
+                        <span>Phòng quản lý</span>
+                    </a>
+
+                    <!-- Notification Bell (Khớp 100% Ảnh chiếc chuông đen, có quả lắc tách rời, pre-rendered dữ liệu không bao giờ bị mất) -->
+                    <div class="notification-wrapper" style="position: relative;">
+                        <button type="button" class="notification-btn" id="btnNotifications" title="Thông báo" aria-label="Thông báo" onclick="toggleNotificationsDropdown(event)" style="width: 42px; height: 42px; border-radius: 50%; background: #ffffff; border: 2px solid #ea580c; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.12); flex-shrink: 0;">
+                            <svg class="cookio-bell-icon" width="22" height="22" viewBox="0 0 24 24" style="display: block; width: 22px; height: 22px; pointer-events: none;">
+                                <path d="M12 2a2 2 0 0 0-2 2c0 .18.02.35.07.52C7.38 5.43 5.5 8.24 5.5 11.5v4.25c0 .4-.16.78-.45 1.07l-1.3 1.3A1 1 0 0 0 4.46 20h15.08a1 1 0 0 0 .71-1.71l-1.3-1.3a1.5 1.5 0 0 1-.45-1.07V11.5c0-3.26-1.88-6.07-4.57-6.98.05-.17.07-.34.07-.52a2 2 0 0 0-2-2z" fill="#3e1713"></path>
+                                <path d="M9.5 21a2.5 2.5 0 0 0 5 0h-5z" fill="#3e1713"></path>
                             </svg>
                             <span class="notif-badge" id="notifBadge" style="<?= $headerUnreadCount > 0 ? 'display: flex;' : 'display: none;' ?>">
                                 <?= $headerUnreadCount > 9 ? '9+' : $headerUnreadCount ?>
                             </span>
                         </button>
-                        <div class="notification-dropdown" id="notificationDropdown" style="display: none;">
-                            <div class="notification-header">
-                                <span>Thông báo của bạn</span>
-                                <button type="button" class="btn-mark-all-read" onclick="markAllNotificationsRead()">Đã đọc tất cả</button>
+                        <div class="notification-dropdown" id="notificationDropdown" style="display: none; position: absolute; top: calc(100% + 12px); right: 0; width: 360px; max-width: 90vw; background: #ffffff; border: 1.5px solid #fed7aa; border-radius: 18px; box-shadow: 0 12px 36px rgba(0,0,0,0.15); z-index: 10000; overflow: hidden;">
+                            <div class="notification-header" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.25rem; border-bottom: 1px solid #f1f5f9; background: #fffaf5;">
+                                <span style="font-weight: 800; color: #3e1713; font-size: 0.95rem;">Thông báo của bạn</span>
+                                <button type="button" class="btn-mark-all-read" onclick="markAllNotificationsRead()" style="background: none; border: none; color: #ea580c; font-size: 0.8rem; font-weight: 700; cursor: pointer;">Đã đọc tất cả</button>
                             </div>
-                            <div class="notification-tabs">
+                            <div class="notification-tabs" style="display: flex; background: #f8fafc; padding: 6px; gap: 4px; border-bottom: 1px solid #e2e8f0;">
                                 <button type="button" class="notif-tab is-active" data-filter="all" onclick="filterNotifications('all', this)">Tất cả</button>
                                 <button type="button" class="notif-tab" data-filter="like" onclick="filterNotifications('like', this)">Yêu thích</button>
                                 <button type="button" class="notif-tab" data-filter="comment" onclick="filterNotifications('comment', this)">Bình luận</button>
                                 <button type="button" class="notif-tab" data-filter="follow" onclick="filterNotifications('follow', this)">Theo dõi</button>
                             </div>
-                            <div class="notification-list" id="notificationList">
-                                <div style="padding: 1.5rem; text-align: center; color: #64748b; font-size: 0.85rem;">Đang tải...</div>
+                            <div class="notification-list" id="notificationList" style="max-height: 380px; overflow-y: auto;">
+                                <?php if (empty($headerNotifs)): ?>
+                                    <div id="notifEmptyNotice" style="padding: 2.5rem 1rem; text-align: center; color: #94a3b8; font-size: 0.88rem;">Chưa có thông báo nào.</div>
+                                <?php else: ?>
+                                    <?php foreach ($headerNotifs as $n): ?>
+                                        <?php
+                                        $nType = $n['type'];
+                                        $nIcon = match ($nType) {
+                                            'like' => '❤️',
+                                            'comment' => '💬',
+                                            'cooksnap' => '📸',
+                                            'follow' => '👥',
+                                            default => '🔔'
+                                        };
+                                        $nTargetUrl = '#';
+                                        if ($nType === 'follow') {
+                                            $nTargetUrl = BASE_URL . '/views/author.php?id=' . (int) $n['actor_id'];
+                                        } elseif (!empty($n['target_id'])) {
+                                            $nTargetUrl = BASE_URL . '/views/recipe-detail.php?id=' . (int) $n['target_id'] . ($nType === 'comment' ? '#comments' : '');
+                                        }
+                                        ?>
+                                        <a href="<?= $nTargetUrl ?>" class="notification-item <?= empty($n['is_read']) ? 'is-unread' : '' ?>" data-type="<?= e($nType) ?>" style="display: flex; gap: 0.75rem; padding: 0.85rem 1.15rem; border-bottom: 1px solid #f8fafc; text-decoration: none; color: inherit; transition: background 0.15s;" onmouseover="this.style.background='#fff7ed';" onmouseout="this.style.background='transparent';">
+                                            <span class="notif-icon" style="font-size: 1.25rem; flex-shrink: 0; margin-top: 2px;"><?= $nIcon ?></span>
+                                            <div class="notif-body" style="flex: 1; font-size: 0.88rem; line-height: 1.45;">
+                                                <strong style="color: #1e293b;"><?= e($n['actor_name']) ?></strong> 
+                                                <span style="color: #475569;"><?= e($n['content']) ?></span>
+                                                <span class="notif-time" style="display: block; font-size: 0.76rem; color: #94a3b8; margin-top: 0.25rem;">
+                                                    🕒 <?= date('d/m/Y H:i', strtotime((string)$n['created_at'])) ?>
+                                                </span>
+                                            </div>
+                                        </a>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                                <div id="notifEmptyFilterNotice" style="display: none; padding: 2.5rem 1rem; text-align: center; color: #94a3b8; font-size: 0.88rem;">Chưa có thông báo nào trong mục này.</div>
                             </div>
                         </div>
                     </div>
@@ -361,11 +415,20 @@ if (isset($_SESSION['user_id'])) {
                         + Viết món mới
                     </button>
 
+                    <!-- Nút vào phòng quản lý của admin (Sửa hình tròn trắng thành nút phòng quản lý theo đúng yêu cầu) -->
+                    <a href="<?= BASE_URL ?>/admin/index.php" class="btn-admin-room" title="Vào phòng quản lý của Admin" style="display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.45rem 1.1rem; border-radius: 9999px; background: #3e1713; color: #ffffff; text-decoration: none; font-weight: 700; font-size: 0.88rem; box-shadow: 0 3px 10px rgba(62, 23, 19, 0.2); transition: all 0.2s; white-space: nowrap;" onmouseover="this.style.background='#ea580c';" onmouseout="this.style.background='#3e1713';">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="9" y1="3" x2="9" y2="21"></line>
+                        </svg>
+                        <span>Phòng quản lý</span>
+                    </a>
+
                     <!-- Nút Chuông Thông Báo (Khớp 100% Ảnh chiếc chuông đen, có quả lắc tách rời, tương phản cao) -->
-                    <button type="button" class="notification-btn" title="Thông báo" aria-label="Thông báo" data-open-login style="width: 42px; height: 42px; border-radius: 50%; background: #ffffff; border: 2px solid #ea580c; display: inline-flex; align-items: center; justify-content: center; color: #3e1713; cursor: pointer; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.12); flex-shrink: 0;">
-                        <svg class="cookio-bell-icon" width="22" height="22" viewBox="0 0 24 24" fill="#3e1713" style="display: block; width: 22px; height: 22px; color: #3e1713; fill: #3e1713;">
-                            <path d="M12 2a2 2 0 0 0-2 2c0 .12.01.24.04.35C7.45 5.23 5.5 7.89 5.5 11v4.5l-2 2V19h17v-1.5l-2-2V11c0-3.11-1.95-5.77-4.54-6.65.03-.11.04-.23.04-.35a2 2 0 0 0-2-2z"/>
-                            <path d="M9.5 20.5a2.5 2.5 0 0 0 5 0h-5z"/>
+                    <button type="button" class="notification-btn" title="Thông báo" aria-label="Thông báo" data-open-login style="width: 42px; height: 42px; border-radius: 50%; background: #ffffff; border: 2px solid #ea580c; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.12); flex-shrink: 0;">
+                        <svg class="cookio-bell-icon" width="22" height="22" viewBox="0 0 24 24" style="display: block; width: 22px; height: 22px; pointer-events: none;">
+                            <path d="M12 2a2 2 0 0 0-2 2c0 .18.02.35.07.52C7.38 5.43 5.5 8.24 5.5 11.5v4.25c0 .4-.16.78-.45 1.07l-1.3 1.3A1 1 0 0 0 4.46 20h15.08a1 1 0 0 0 .71-1.71l-1.3-1.3a1.5 1.5 0 0 1-.45-1.07V11.5c0-3.26-1.88-6.07-4.57-6.98.05-.17.07-.34.07-.52a2 2 0 0 0-2-2z" fill="#3e1713"></path>
+                            <path d="M9.5 21a2.5 2.5 0 0 0 5 0h-5z" fill="#3e1713"></path>
                         </svg>
                     </button>
 
