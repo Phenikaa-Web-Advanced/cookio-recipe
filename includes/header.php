@@ -337,12 +337,13 @@ if (isset($_SESSION['user_id'])) {
                         <span>Phòng quản lý</span>
                     </a>
 
-                    <!-- Notification Bell (Khớp 100% Ảnh chiếc chuông đen, có quả lắc tách rời, pre-rendered dữ liệu không bao giờ bị mất) -->
+                    <!-- Notification Bell (Khớp 100% Ảnh 8: Hình chiếc chuông đen đặc, có quả lắc tách rời, pre-rendered dữ liệu không bao giờ bị mất) -->
                     <div class="notification-wrapper" style="position: relative;">
                         <button type="button" class="notification-btn" id="btnNotifications" title="Thông báo" aria-label="Thông báo" onclick="toggleNotificationsDropdown(event)" style="width: 42px; height: 42px; border-radius: 50%; background: #ffffff; border: 2px solid #ea580c; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.12); flex-shrink: 0;">
-                            <svg class="cookio-bell-icon" width="22" height="22" viewBox="0 0 24 24" style="display: block; width: 22px; height: 22px; pointer-events: none;">
-                                <path d="M12 2a2 2 0 0 0-2 2c0 .18.02.35.07.52C7.38 5.43 5.5 8.24 5.5 11.5v4.25c0 .4-.16.78-.45 1.07l-1.3 1.3A1 1 0 0 0 4.46 20h15.08a1 1 0 0 0 .71-1.71l-1.3-1.3a1.5 1.5 0 0 1-.45-1.07V11.5c0-3.26-1.88-6.07-4.57-6.98.05-.17.07-.34.07-.52a2 2 0 0 0-2-2z" fill="#3e1713"></path>
-                                <path d="M9.5 21a2.5 2.5 0 0 0 5 0h-5z" fill="#3e1713"></path>
+                            <svg class="cookio-bell-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block; width: 22px; height: 22px; pointer-events: none;">
+                                <circle cx="12" cy="3.5" r="1.5" fill="#3e1713"/>
+                                <path d="M12 4.5C8.96 4.5 6.5 6.96 6.5 10V15.2L4.65 17.05C4.24 17.46 4.53 18.17 5.11 18.17H18.89C19.47 18.17 19.76 17.46 19.35 17.05L17.5 15.2V10C17.5 6.96 15.04 4.5 12 4.5Z" fill="#3e1713"/>
+                                <path d="M9.5 20.2C9.5 21.58 10.62 22.7 12 22.7C13.38 22.7 14.5 21.58 14.5 20.2H9.5Z" fill="#3e1713"/>
                             </svg>
                             <span class="notif-badge" id="notifBadge" style="<?= $headerUnreadCount > 0 ? 'display: flex;' : 'display: none;' ?>">
                                 <?= $headerUnreadCount > 9 ? '9+' : $headerUnreadCount ?>
@@ -423,14 +424,6 @@ if (isset($_SESSION['user_id'])) {
                         </svg>
                         <span>Phòng quản lý</span>
                     </a>
-
-                    <!-- Nút Chuông Thông Báo (Khớp 100% Ảnh chiếc chuông đen, có quả lắc tách rời, tương phản cao) -->
-                    <button type="button" class="notification-btn" title="Thông báo" aria-label="Thông báo" data-open-login style="width: 42px; height: 42px; border-radius: 50%; background: #ffffff; border: 2px solid #ea580c; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.12); flex-shrink: 0;">
-                        <svg class="cookio-bell-icon" width="22" height="22" viewBox="0 0 24 24" style="display: block; width: 22px; height: 22px; pointer-events: none;">
-                            <path d="M12 2a2 2 0 0 0-2 2c0 .18.02.35.07.52C7.38 5.43 5.5 8.24 5.5 11.5v4.25c0 .4-.16.78-.45 1.07l-1.3 1.3A1 1 0 0 0 4.46 20h15.08a1 1 0 0 0 .71-1.71l-1.3-1.3a1.5 1.5 0 0 1-.45-1.07V11.5c0-3.26-1.88-6.07-4.57-6.98.05-.17.07-.34.07-.52a2 2 0 0 0-2-2z" fill="#3e1713"></path>
-                            <path d="M9.5 21a2.5 2.5 0 0 0 5 0h-5z" fill="#3e1713"></path>
-                        </svg>
-                    </button>
 
                     <!-- Nút Đăng nhập -->
                     <button type="button" class="y-pill-btn-brown" data-open-login style="padding: 0.45rem 1.15rem; font-size: 0.88rem;">

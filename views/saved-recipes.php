@@ -57,18 +57,6 @@ if (is_logged_in()) {
     $allIngredientsText = implode("\n", $ingredientsList);
 }
 
-// Luôn lấy danh sách món ăn gợi ý từ kho dữ liệu Cookio để liên kết trực tiếp mục yêu thích với kho món ăn
-$stmtDiscover = db()->query("
-    SELECT r.*, u.username AS author_name,
-           (SELECT COUNT(*) FROM recipe_likes WHERE recipe_id = r.id) AS likes_count
-    FROM recipes r
-    JOIN users u ON u.id = r.author_id
-    WHERE r.status = 'approved'
-    ORDER BY r.views_count DESC, r.id DESC
-    LIMIT 6
-");
-$discoverRecipes = $stmtDiscover ? $stmtDiscover->fetchAll() : [];
-
 $pageTitle = 'Món Yêu Thích - Cookio';
 require __DIR__ . '/../includes/header.php';
 ?>
@@ -269,62 +257,6 @@ require __DIR__ . '/../includes/header.php';
         </div>
 
     <?php endif; ?>
-
-    <!-- =====================================================================
-         KHO MÓN ĂN GỢI Ý ĐỂ LƯU VÀO YÊU THÍCH (LIÊN KẾT DỮ LIỆU MÓN ĂN)
-         ===================================================================== -->
-    <section class="saved-discover-section" style="margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1.5px dashed #fed7aa;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
-            <div>
-                <h2 style="font-size: 1.35rem; font-weight: 800; color: #3e1713; margin: 0 0 0.35rem;">
-                    🍳 Khám Phá Món Ngon Thịnh Hành Để Thêm Vào Yêu Thích
-                </h2>
-                <p style="color: #64748b; font-size: 0.92rem; margin: 0;">
-                    Những công thức được cộng đồng Cookio yêu thích và nấu nhiều nhất hôm nay
-                </p>
-            </div>
-            <a href="<?= BASE_URL ?>/index.php" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1.25rem; background: #ea580c; border-radius: 9999px; color: #ffffff; text-decoration: none; font-weight: 700; font-size: 0.88rem; box-shadow: 0 3px 10px rgba(234, 88, 12, 0.25); transition: all 0.2s;" onmouseover="this.style.background='#c2410c';" onmouseout="this.style.background='#ea580c';">
-                Xem toàn bộ kho món ăn Cookio &rarr;
-            </a>
-        </div>
-
-        <div class="recipe-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
-            <?php foreach ($discoverRecipes as $dr): ?>
-                <?php 
-                $drImg = !empty($dr['image_url']) ? BASE_URL . '/' . e($dr['image_url']) : BASE_URL . '/assets/images/default-recipe.jpg';
-                ?>
-                <div style="background: #ffffff; border: 1.5px solid #fed7aa; border-radius: 18px; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,0.04); display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
-                    <div>
-                        <div style="position: relative; aspect-ratio: 16/10; overflow: hidden;">
-                            <a href="<?= BASE_URL ?>/views/recipe-detail.php?id=<?= (int)$dr['id'] ?>">
-                                <img src="<?= $drImg ?>" alt="<?= e($dr['title']) ?>" style="width: 100%; height: 100%; object-fit: cover;">
-                            </a>
-                            <span style="position: absolute; top: 0.65rem; left: 0.65rem; background: rgba(30,27,27,0.8); backdrop-filter: blur(4px); color: #fff; font-size: 0.72rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 9999px;">
-                                <?= e($dr['category'] ?? 'Món chính') ?>
-                            </span>
-                        </div>
-                        <div style="padding: 1.15rem;">
-                            <div style="display: flex; gap: 0.65rem; font-size: 0.8rem; color: #9a3412; font-weight: 600; margin-bottom: 0.45rem;">
-                                <span>⏱️ <?= e($dr['cooking_time'] ?? '30p') ?></span>
-                                <span>•</span>
-                                <span>❤️ <?= (int)$dr['likes_count'] ?> yêu thích</span>
-                            </div>
-                            <h3 style="font-size: 1rem; font-weight: 800; color: #3e1713; margin: 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                                <a href="<?= BASE_URL ?>/views/recipe-detail.php?id=<?= (int)$dr['id'] ?>" style="color: inherit; text-decoration: none;">
-                                    <?= e($dr['title']) ?>
-                                </a>
-                            </h3>
-                        </div>
-                    </div>
-                    <div style="padding: 0 1.15rem 1.15rem;">
-                        <a href="<?= BASE_URL ?>/views/recipe-detail.php?id=<?= (int)$dr['id'] ?>" style="display: block; text-align: center; width: 100%; padding: 0.55rem; border-radius: 9999px; background: #fff7ed; border: 1.5px solid #fed7aa; color: #ea580c; font-size: 0.88rem; font-weight: 700; text-decoration: none; transition: all 0.2s;" onmouseover="this.style.background='#ea580c'; this.style.color='#ffffff';" onmouseout="this.style.background='#fff7ed'; this.style.color='#ea580c';">
-                            Xem cách nấu & Thả tim &rarr;
-                        </a>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </section>
 
 </div>
 

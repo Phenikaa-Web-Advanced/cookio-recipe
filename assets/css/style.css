@@ -5136,7 +5136,8 @@ input:focus, textarea:focus, select:focus {
 }
 
 .notification-btn .cookio-bell-icon,
-.notification-btn svg {
+.notification-btn svg,
+.notification-btn svg * {
     display: block !important;
     color: #3e1713 !important;
     fill: #3e1713 !important;
@@ -5394,7 +5395,8 @@ input:focus, textarea:focus, select:focus {
 }
 
 [data-theme="dark"] .notification-btn .cookio-bell-icon,
-[data-theme="dark"] .notification-btn svg {
+[data-theme="dark"] .notification-btn svg,
+[data-theme="dark"] .notification-btn svg * {
     color: #262626 !important;
     fill: #262626 !important;
 }
