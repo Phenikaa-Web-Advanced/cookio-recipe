@@ -57,180 +57,239 @@ if (is_logged_in()) {
     $allIngredientsText = implode("\n", $ingredientsList);
 }
 
-$pageTitle = 'Món yêu thích - Cookio';
+$pageTitle = 'Món Yêu Thích - Cookio';
 require __DIR__ . '/../includes/header.php';
 ?>
-<div class="recipe-detail-container" style="padding-top: 2rem; padding-bottom: 3.5rem;">
 
-    <!-- Page header -->
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
-        <div>
-            <h1 style="font-size: 1.85rem; font-weight: 800; color: var(--text-main); margin: 0 0 0.35rem;">
-                Món Yêu Thích
+<div class="saved-page-wrapper" style="max-width: 1100px; margin: 0 auto; padding: 2rem 1rem 4.5rem;">
+
+    <!-- Breadcrumb -->
+    <nav class="cookio-breadcrumb" style="display: flex; align-items: center; gap: 0.45rem; font-size: 0.88rem; margin-bottom: 1.5rem;">
+        <a href="<?= BASE_URL ?>/index.php" style="color: #ea580c; text-decoration: none; font-weight: 600;">Trang chủ</a>
+        <span style="color: #cbd5e1;">&rsaquo;</span>
+        <span style="color: #64748b; font-weight: 600;">Món yêu thích</span>
+    </nav>
+
+    <!-- Header Box cùng tông màu ấm áp của Cookio -->
+    <div class="saved-header-card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; background: linear-gradient(180deg, #fffaf5 0%, #ffffff 100%); border: 1.5px solid #fed7aa; border-radius: 24px; padding: 2.25rem 2.5rem; box-shadow: 0 6px 24px rgba(234, 88, 12, 0.05); margin-bottom: 2rem;">
+        <div style="max-width: 600px;">
+            <span style="display: inline-block; background: #fff7ed; color: #ea580c; border: 1px solid #fed7aa; padding: 0.35rem 0.95rem; border-radius: 9999px; font-weight: 800; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.85rem;">
+                BỘ SƯU TẬP BẾP RIÊNG BẠN
+            </span>
+            <h1 style="font-size: 2.15rem; font-weight: 800; color: #3e1713; margin: 0 0 0.5rem; letter-spacing: -0.02em;">
+                Món Ăn Yêu Thích & Ghi Chú
             </h1>
-            <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem;">
-                Không gian lưu giữ những món ăn tâm đắc cùng ghi chú công thức riêng của bạn.
+            <p style="margin: 0; color: #64748b; font-size: 0.98rem; line-height: 1.6;">
+                Không gian lưu giữ những công thức tâm đắc, hỗ trợ ghi chú bí quyết gia giảm gia vị riêng và tự động gom nguyên liệu đi chợ thông minh.
             </p>
         </div>
 
         <?php if (!empty($recipes)): ?>
-            <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
-                <button type="button" class="button button-create" 
+            <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+                <button type="button" 
                         onclick="openGroceryModal(<?= json_encode($allIngredientsText) ?>, 'Danh Sách Đi Chợ - <?= count($recipes) ?> Món Yêu Thích')"
-                        style="padding: 0.6rem 1.15rem; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 0.45rem;">
-                    <span>Gom nguyên liệu đi chợ</span>
+                        style="background: #ea580c; color: #ffffff; border: none; padding: 0.75rem 1.45rem; border-radius: 9999px; font-weight: 700; font-size: 0.92rem; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 14px rgba(234, 88, 12, 0.25);"
+                        onmouseover="this.style.background='#c2410c';" onmouseout="this.style.background='#ea580c';">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                    <span>Gom nguyên liệu đi chợ (<?= count($recipes) ?> món)</span>
                 </button>
             </div>
         <?php endif; ?>
     </div>
 
     <?php if (isset($_GET['bookmark'])): ?>
-        <div class="notice success" style="margin-bottom: 1.25rem;">
+        <div class="notice success" style="background: #ecfdf5; border: 1.5px solid #a7f3d0; color: #065f46; border-radius: 14px; padding: 0.85rem 1.25rem; font-weight: 600; margin-bottom: 1.75rem;">
             <?= match ($_GET['bookmark']) {
-                'unsaved' => 'Đã bỏ lưu món khỏi bộ sưu tập yêu thích.',
-                'note_saved' => 'Đã lưu ghi chú bếp thành công.',
-                default => 'Đã cập nhật bộ sưu tập món yêu thích.'
+                'unsaved' => 'Đã gỡ món khỏi danh sách yêu thích.',
+                'note_saved' => 'Đã lưu ghi chú nhà bếp thành công.',
+                default => 'Đã cập nhật danh sách món yêu thích.'
             } ?>
         </div>
     <?php endif; ?>
 
     <?php if (!is_logged_in()): ?>
-        <div style="text-align: center; padding: 3.5rem 1.5rem; background: #fff; border-radius: 1.25rem; border: 1.5px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+        <!-- Trạng thái khi khách chưa đăng nhập -->
+        <div class="saved-guest-card" style="text-align: center; padding: 4rem 2rem; background: #ffffff; border-radius: 24px; border: 1.5px solid #fed7aa; box-shadow: 0 8px 30px rgba(0,0,0,0.04);">
             <div style="width: 64px; height: 64px; border-radius: 50%; background: #fff7ed; margin: 0 auto 1.25rem; display: flex; align-items: center; justify-content: center; border: 1.5px solid #fed7aa;">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                </svg>
-            </div>
-            <h3 style="margin: 0 0 0.5rem; font-size: 1.3rem; color: var(--text-main); font-weight: 800;">Đăng nhập để xem món yêu thích</h3>
-            <p style="color: var(--text-muted); margin: 0 0 1.5rem; font-size: 0.95rem;">Bạn cần đăng nhập để xem các món ăn yêu thích cùng ghi chú cá nhân.</p>
-            <button type="button" class="button button-create" data-open-login style="padding: 0.75rem 2rem;">Đăng nhập ngay</button>
-        </div>
-    <?php elseif (empty($recipes) && $selectedCat === ''): ?>
-        <div style="text-align: center; padding: 3.5rem 1.5rem; background: #fff; border-radius: 1.25rem; border: 2px dashed var(--border);">
-            <div style="width: 64px; height: 64px; border-radius: 50%; background: #fef2f2; margin: 0 auto 1.25rem; display: flex; align-items: center; justify-content: center; border: 1.5px solid #fecaca;">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                 </svg>
             </div>
-            <h3 style="margin: 0 0 0.5rem; font-size: 1.35rem; color: var(--text-main); font-weight: 800;">Danh sách món yêu thích đang trống</h3>
-            <p style="color: var(--text-muted); margin: 0 0 1.5rem; font-size: 0.95rem;">Nhấn nút "Lưu món" hoặc thả tim trên bất kỳ công thức nào để gom về đây và viết ghi chú riêng nhé!</p>
-            <a href="<?= BASE_URL ?>/index.php" class="button button-create" style="display: inline-block; padding: 0.75rem 2rem; font-weight: 700; text-decoration: none;">
+            <h2 style="font-size: 1.45rem; font-weight: 800; color: #3e1713; margin: 0 0 0.5rem;">
+                Đăng nhập để xem bộ sưu tập yêu thích
+            </h2>
+            <p style="color: #64748b; font-size: 0.98rem; max-width: 480px; margin: 0 auto 1.75rem; line-height: 1.55;">
+                Đăng nhập tài khoản Cookio để đồng bộ các món ăn bạn đã thả tim, quản lý ghi chú bí quyết riêng và đi chợ thông minh.
+            </p>
+            <button type="button" data-open-login style="background: #ea580c; color: #ffffff; border: none; padding: 0.8rem 2.2rem; border-radius: 9999px; font-weight: 700; font-size: 0.95rem; cursor: pointer; box-shadow: 0 4px 14px rgba(234, 88, 12, 0.25);">
+                Đăng nhập ngay
+            </button>
+        </div>
+
+    <?php elseif (empty($recipes) && $selectedCat === ''): ?>
+        <!-- Trạng thái trống khi chưa có món yêu thích -->
+        <div class="saved-empty-card" style="text-align: center; padding: 4rem 2rem; background: #ffffff; border-radius: 24px; border: 2px dashed #fed7aa;">
+            <div style="width: 64px; height: 64px; border-radius: 50%; background: #fff7ed; margin: 0 auto 1.25rem; display: flex; align-items: center; justify-content: center; border: 1.5px solid #fed7aa;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                </svg>
+            </div>
+            <h2 style="font-size: 1.45rem; font-weight: 800; color: #3e1713; margin: 0 0 0.5rem;">
+                Danh sách món yêu thích đang trống
+            </h2>
+            <p style="color: #64748b; font-size: 0.98rem; max-width: 480px; margin: 0 auto 1.75rem; line-height: 1.55;">
+                Bạn chưa lưu hoặc thả tim món ăn nào. Hãy dạo quanh kho tàng ẩm thực Cookio để khám phá và thêm món vào gian bếp nhé!
+            </p>
+            <a href="<?= BASE_URL ?>/index.php" style="display: inline-block; background: #ea580c; color: #ffffff; padding: 0.8rem 2.2rem; border-radius: 9999px; font-weight: 700; font-size: 0.95rem; text-decoration: none; box-shadow: 0 4px 14px rgba(234, 88, 12, 0.25);">
                 Khám phá món ngon ngay
             </a>
         </div>
+
     <?php else: ?>
 
-        <!-- Category Filter Pills Bar -->
+        <!-- Dải lọc chuyên mục dạng viên thuốc bo tròn cùng tone -->
         <?php if (!empty($categories)): ?>
-            <div class="saved-filter-bar">
-                <a href="<?= BASE_URL ?>/views/saved-recipes.php" class="saved-filter-pill <?= $selectedCat === '' ? 'is-active' : '' ?>">
-                    Tất cả món đã lưu
+            <div class="saved-cat-tabs" style="display: flex; gap: 0.65rem; margin-bottom: 1.75rem; overflow-x: auto; padding-bottom: 0.5rem;">
+                <a href="<?= BASE_URL ?>/views/saved-recipes.php" 
+                   style="padding: 0.5rem 1.25rem; border-radius: 9999px; font-size: 0.9rem; font-weight: 700; text-decoration: none; transition: all 0.2s; white-space: nowrap; <?= $selectedCat === '' ? 'background: #ea580c; color: #ffffff; box-shadow: 0 3px 10px rgba(234, 88, 12, 0.25);' : 'background: #fffaf5; color: #4a1c17; border: 1.5px solid #fed7aa;' ?>">
+                    Tất cả (<?= count($recipes) ?>)
                 </a>
                 <?php foreach ($categories as $catName): ?>
                     <a href="<?= BASE_URL ?>/views/saved-recipes.php?cat=<?= urlencode($catName) ?>" 
-                       class="saved-filter-pill <?= $selectedCat === $catName ? 'is-active' : '' ?>">
+                       style="padding: 0.5rem 1.25rem; border-radius: 9999px; font-size: 0.9rem; font-weight: 700; text-decoration: none; transition: all 0.2s; white-space: nowrap; <?= $selectedCat === $catName ? 'background: #ea580c; color: #ffffff; box-shadow: 0 3px 10px rgba(234, 88, 12, 0.25);' : 'background: #fffaf5; color: #4a1c17; border: 1.5px solid #fed7aa;' ?>">
                         <?= e($catName) ?>
                     </a>
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
 
-        <?php if (empty($recipes) && $selectedCat !== ''): ?>
-            <div style="text-align: center; padding: 2.5rem 1rem; background: #fff; border-radius: 1rem; border: 1px solid var(--border);">
-                <p style="color: var(--text-muted); margin-bottom: 1rem;">Không có món nào thuộc danh mục "<strong><?= e($selectedCat) ?></strong>" trong danh sách đã lưu.</p>
-                <a href="<?= BASE_URL ?>/views/saved-recipes.php" class="button button-outline">&larr; Xem tất cả món đã lưu</a>
-            </div>
-        <?php else: ?>
-
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0 0 1.25rem;">
-                Đang hiển thị <strong style="color: var(--primary);"><?= count($recipes) ?> món</strong> trong danh sách yêu thích của bạn.
-            </p>
-
-            <!-- Recipe grid -->
-            <div class="recipe-grid">
-                <?php foreach ($recipes as $recipe): ?>
-                    <?php 
-                    $imgSrc = !empty($recipe['image_url']) ? BASE_URL . '/' . e($recipe['image_url']) : BASE_URL . '/assets/images/default-recipe.jpg';
-                    $hasNote = !empty($recipe['personal_note']);
-                    ?>
-                    <article class="recipe-card" style="display: flex; flex-direction: column; justify-content: space-between;">
-                        <div>
-                            <!-- Card image -->
-                            <div class="recipe-card-media">
-                                <a href="<?= BASE_URL ?>/views/recipe-detail.php?id=<?= (int) $recipe['id'] ?>">
-                                    <img src="<?= $imgSrc ?>" alt="<?= e($recipe['title']) ?>" loading="lazy">
-                                </a>
-                                
-                                <?php if (!empty($recipe['category'])): ?>
-                                    <span class="card-category-badge"><?= e($recipe['category']) ?></span>
-                                <?php endif; ?>
-
-                                <!-- Unsave button -->
-                                <form method="post" action="<?= BASE_URL ?>/actions/saved_action.php" style="position: absolute; top: 0.6rem; right: 0.6rem; z-index: 2;">
-                                    <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
-                                    <input type="hidden" name="recipe_id" value="<?= (int) $recipe['id'] ?>">
-                                    <input type="hidden" name="return_url" value="views/saved-recipes.php<?= $selectedCat !== '' ? '?cat=' . urlencode($selectedCat) : '' ?>">
-                                    <button type="submit" class="card-save-btn saved" title="Bỏ lưu khỏi bếp yêu thích"
-                                        onclick="return confirm('Bỏ lưu món «<?= e(addslashes($recipe['title'])) ?>»?')"
-                                        style="background: #ea580c; border-color: #ea580c; color: #fff;">
-                                        ❤️
-                                    </button>
-                                </form>
-                            </div>
-
-                            <!-- Card body -->
-                            <div class="recipe-card-body">
-                                <h3 class="recipe-card-title">
-                                    <a href="<?= BASE_URL ?>/views/recipe-detail.php?id=<?= (int) $recipe['id'] ?>"><?= e($recipe['title']) ?></a>
-                                </h3>
-                                <div class="card-author-chip">
-                                    <span class="author-mini-avatar"><?= mb_strtoupper(mb_substr($recipe['author_name'], 0, 1)) ?></span>
-                                    <span>Bếp: <strong><?= e($recipe['author_name']) ?></strong></span>
-                                </div>
-                                <div style="display: flex; gap: 0.75rem; align-items: center; margin-top: 0.4rem; font-size: 0.8rem; color: var(--text-muted);">
-                                    <?php if (!empty($recipe['cooking_time'])): ?>
-                                        <span>⏱️ <?= e($recipe['cooking_time']) ?></span>
-                                    <?php endif; ?>
-                                    <?php if (!empty($recipe['calories'])): ?>
-                                        <span>🔥 <?= (int)$recipe['calories'] ?> kcal</span>
-                                    <?php endif; ?>
-                                </div>
-
-                                <!-- Personal Chef Note Box -->
-                                <div class="personal-note-box" id="personal-note-box-<?= (int) $recipe['id'] ?>">
-                                    <div class="personal-note-header">
-                                        <span>📝 Ghi chú bếp của bạn</span>
-                                        <?php if ($hasNote): ?>
-                                            <span style="font-size: 0.7rem; color: #16a34a; font-weight: 700;">✓ Có ghi chú</span>
-                                        <?php endif; ?>
-                                    </div>
-                                    <textarea class="personal-note-textarea" placeholder="Thêm lưu ý riêng (VD: giảm cay, nấu 15 phút, chồng rất thích...)"><?= e($recipe['personal_note'] ?? '') ?></textarea>
-                                    <div style="display: flex; justify-content: flex-end;">
-                                        <button type="button" class="personal-note-save-btn" onclick="saveRecipeNote(<?= (int) $recipe['id'] ?>, this)">
-                                            Lưu ghi chú
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Card Footer actions -->
-                        <div style="padding: 0 1rem 1rem; display: flex; gap: 0.5rem;">
-                            <a href="<?= BASE_URL ?>/views/recipe-detail.php?id=<?= (int) $recipe['id'] ?>" class="button button-primary" style="flex: 1.2; font-size: 0.84rem; padding: 0.5rem; text-decoration: none; text-align: center; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem;">
-                                👩‍🍳 Vào bếp nấu
+        <!-- Lưới món ăn yêu thích -->
+        <div class="recipe-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.75rem;">
+            <?php foreach ($recipes as $recipe): ?>
+                <?php 
+                $imgSrc = !empty($recipe['image_url']) ? BASE_URL . '/' . e($recipe['image_url']) : BASE_URL . '/assets/images/default-recipe.jpg';
+                $hasNote = !empty($recipe['personal_note']);
+                ?>
+                <article class="saved-recipe-card" style="background: #ffffff; border: 1.5px solid #fed7aa; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.25s, box-shadow 0.25s;">
+                    <div>
+                        <!-- Ảnh món & Nút bỏ lưu tinh tế -->
+                        <div style="position: relative; width: 100%; aspect-ratio: 16/10; overflow: hidden; background: #fdfbf7;">
+                            <a href="<?= BASE_URL ?>/views/recipe-detail.php?id=<?= (int) $recipe['id'] ?>">
+                                <img src="<?= $imgSrc ?>" alt="<?= e($recipe['title']) ?>" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s ease;" loading="lazy">
                             </a>
-                            <button type="button" class="button button-outline js-copy-ingredients" data-ingredients="<?= e($recipe['ingredients'] ?? '') ?>" style="flex: 0.8; font-size: 0.84rem; padding: 0.5rem;" title="Xem nguyên liệu món này" onclick="openGroceryModal(<?= json_encode($recipe['ingredients'] ?? '') ?>, 'Nguyên liệu: <?= e(addslashes($recipe['title'])) ?>')">
-                                📋 Đi chợ
-                            </button>
+                            
+                            <?php if (!empty($recipe['category'])): ?>
+                                <span style="position: absolute; top: 0.75rem; left: 0.75rem; background: rgba(30, 27, 27, 0.8); backdrop-filter: blur(4px); color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.75rem; border-radius: 9999px;">
+                                    <?= e($recipe['category']) ?>
+                                </span>
+                            <?php endif; ?>
+
+                            <!-- Nút gỡ món khỏi danh sách với biểu tượng trái tim tinh tế -->
+                            <form method="post" action="<?= BASE_URL ?>/actions/saved_action.php" style="position: absolute; top: 0.65rem; right: 0.65rem; z-index: 2;">
+                                <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
+                                <input type="hidden" name="recipe_id" value="<?= (int) $recipe['id'] ?>">
+                                <input type="hidden" name="return_url" value="views/saved-recipes.php<?= $selectedCat !== '' ? '?cat=' . urlencode($selectedCat) : '' ?>">
+                                <button type="submit" title="Bỏ lưu món này"
+                                    onclick="return confirm('Bỏ lưu món «<?= e(addslashes($recipe['title'])) ?>» khỏi bộ sưu tập yêu thích?')"
+                                    style="width: 36px; height: 36px; border-radius: 50%; background: #ffffff; border: 1.5px solid #fed7aa; display: flex; align-items: center; justify-content: center; color: #ef4444; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.12); transition: all 0.2s;"
+                                    onmouseover="this.style.transform='scale(1.1)';" onmouseout="this.style.transform='scale(1)';">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#ef4444" stroke="#ef4444" stroke-width="1.5">
+                                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                    </svg>
+                                </button>
+                            </form>
                         </div>
-                    </article>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
+
+                        <!-- Thân card -->
+                        <div style="padding: 1.25rem;">
+                            <!-- Tác giả & Thời gian -->
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; font-size: 0.82rem; color: #9a3412; font-weight: 600;">
+                                <div style="display: flex; align-items: center; gap: 0.4rem;">
+                                    <span style="width: 20px; height: 20px; border-radius: 50%; background: #ea580c; color: #ffffff; font-size: 0.7rem; font-weight: 800; display: inline-flex; align-items: center; justify-content: center;">
+                                        <?= mb_strtoupper(mb_substr($recipe['author_name'], 0, 1)) ?>
+                                    </span>
+                                    <span><?= e($recipe['author_name']) ?></span>
+                                </div>
+                                <?php if (!empty($recipe['cooking_time'])): ?>
+                                    <span><?= e($recipe['cooking_time']) ?></span>
+                                <?php endif; ?>
+                            </div>
+
+                            <h3 style="font-size: 1.1rem; font-weight: 800; color: #3e1713; margin: 0 0 0.75rem; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                <a href="<?= BASE_URL ?>/views/recipe-detail.php?id=<?= (int) $recipe['id'] ?>" style="color: inherit; text-decoration: none;" onmouseover="this.style.color='#ea580c';" onmouseout="this.style.color='#3e1713';">
+                                    <?= e($recipe['title']) ?>
+                                </a>
+                            </h3>
+
+                            <!-- Hộp ghi chú bếp cá nhân chuyên nghiệp -->
+                            <div class="personal-note-box" id="personal-note-box-<?= (int) $recipe['id'] ?>" style="background: #fffaf5; border: 1.5px solid #fed7aa; border-radius: 12px; padding: 0.85rem; margin-bottom: 0.75rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; font-size: 0.8rem; font-weight: 700; color: #7c2d12;">
+                                    <span>Ghi chú riêng của bạn</span>
+                                    <?php if ($hasNote): ?>
+                                        <span style="font-size: 0.72rem; color: #059669; font-weight: 700;">Đã lưu</span>
+                                    <?php endif; ?>
+                                </div>
+                                <textarea class="personal-note-textarea" placeholder="Thêm lưu ý riêng (vd: giảm cay, nấu 15p, thêm tiêu...)" style="width: 100%; border: 1px solid #fed7aa; border-radius: 8px; padding: 0.45rem 0.65rem; font-size: 0.84rem; outline: none; background: #ffffff; resize: vertical; min-height: 52px; font-family: inherit; box-sizing: border-box;"><?= e($recipe['personal_note'] ?? '') ?></textarea>
+                                <div style="display: flex; justify-content: flex-end; margin-top: 0.4rem;">
+                                    <button type="button" class="personal-note-save-btn" onclick="saveRecipeNote(<?= (int) $recipe['id'] ?>, this)" style="background: #ea580c; color: #ffffff; border: none; padding: 0.35rem 0.85rem; border-radius: 9999px; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: background 0.2s;">
+                                        Lưu ghi chú
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Thanh nút bấm chân card -->
+                    <div style="padding: 0 1.25rem 1.25rem; display: flex; gap: 0.5rem;">
+                        <a href="<?= BASE_URL ?>/views/recipe-detail.php?id=<?= (int) $recipe['id'] ?>" style="flex: 1.2; font-size: 0.86rem; padding: 0.6rem; text-decoration: none; text-align: center; font-weight: 700; background: #ea580c; color: #ffffff; border-radius: 9999px; transition: background 0.2s; box-shadow: 0 2px 8px rgba(234, 88, 12, 0.2);" onmouseover="this.style.background='#c2410c';" onmouseout="this.style.background='#ea580c';">
+                            Vào bếp nấu &rarr;
+                        </a>
+                        <button type="button" class="js-copy-ingredients" data-ingredients="<?= e($recipe['ingredients'] ?? '') ?>" title="Gom nguyên liệu món này" onclick="openGroceryModal(<?= json_encode($recipe['ingredients'] ?? '') ?>, 'Nguyên liệu: <?= e(addslashes($recipe['title'])) ?>')" style="flex: 0.8; font-size: 0.86rem; padding: 0.6rem; font-weight: 700; background: #ffffff; color: #3e1713; border: 1.5px solid #fed7aa; border-radius: 9999px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#fff7ed'; this.style.borderColor='#ea580c';" onmouseout="this.style.background='#ffffff'; this.style.borderColor='#fed7aa';">
+                            Đi chợ
+                        </button>
+                    </div>
+                </article>
+            <?php endforeach; ?>
+        </div>
 
     <?php endif; ?>
+
 </div>
+
+<!-- CSS cho chế độ Ban đêm (Dark Mode) hoàn hảo -->
+<style>
+[data-theme="dark"] .saved-header-card,
+[data-theme="dark"] .saved-recipe-card,
+[data-theme="dark"] .saved-guest-card,
+[data-theme="dark"] .saved-empty-card {
+    background: #131b2e !important;
+    border-color: #253556 !important;
+}
+[data-theme="dark"] .saved-header-card h1,
+[data-theme="dark"] .saved-recipe-card h3 a,
+[data-theme="dark"] .saved-guest-card h2,
+[data-theme="dark"] .saved-empty-card h2 {
+    color: #f8fafc !important;
+}
+[data-theme="dark"] .personal-note-box {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+[data-theme="dark"] .personal-note-textarea {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+    color: #f8fafc !important;
+}
+[data-theme="dark"] .saved-cat-tabs a {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #cbd5e1 !important;
+}
+</style>
 
 <?php
 require __DIR__ . '/../includes/modal-login.php';

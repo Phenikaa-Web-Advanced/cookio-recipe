@@ -1453,7 +1453,6 @@ input:focus, textarea:focus, select:focus {
 [data-theme="dark"] .notif-body {
     color: #cbd5e1 !important;
 }
-[data-theme="dark"] .notification-btn,
 [data-theme="dark"] .dark-mode-toggle {
     border-color: #334155 !important;
     background-color: #1e293b !important;

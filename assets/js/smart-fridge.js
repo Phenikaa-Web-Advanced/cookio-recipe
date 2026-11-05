@@ -46,9 +46,8 @@ function filterRecipes() {
             visibleCount++;
             if (badgeContainer) {
                 const isFull = matchedCount === selected.length;
-                const bgStyle = isFull ? 'background:#dcfce7; color:#15803d;' : 'background:#fff7ed; color:#ea580c;';
-                const icon = isFull ? '✅' : '✨';
-                badgeContainer.innerHTML = `<span style="display:inline-block; font-size:0.78rem; font-weight:700; ${bgStyle} padding:0.2rem 0.65rem; border-radius:99px;">${icon} Khớp ${matchedCount}/${selected.length} nguyên liệu</span>`;
+                const bgStyle = isFull ? 'background:#dcfce7; color:#15803d; border:1px solid #86efac;' : 'background:#fff7ed; color:#ea580c; border:1px solid #fed7aa;';
+                badgeContainer.innerHTML = `<span style="display:inline-block; font-size:0.78rem; font-weight:700; ${bgStyle} padding:0.25rem 0.75rem; border-radius:99px;">Khớp ${matchedCount}/${selected.length} nguyên liệu</span>`;
             }
         } else {
             if (badgeContainer) badgeContainer.innerHTML = '';
