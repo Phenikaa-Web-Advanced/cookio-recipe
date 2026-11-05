@@ -1,37 +1,37 @@
-# 🍳 Cookio - Mạng Xã Hội Ẩm Thực & Nền Tảng Chia Sẻ Công Thức Bếp Gia Đình
+#  Cookio - Mạng Xã Hội Ẩm Thực & Nền Tảng Chia Sẻ Công Thức Bếp Gia Đình
 
 > **Cookio** là nền tảng ẩm thực gia đình hiện đại, ấm cúng và thông minh theo chuẩn **Cookpad**, **Tasty** và **Yummly**, được xây dựng bằng **PHP thuần (PHP 8.2)**, **MariaDB/MySQL**, **JavaScript (ES6+)** và **CSS hiện đại**.
 > Hệ thống mang đến trải nghiệm nấu ăn thông minh, kết nối cộng đồng yêu bếp, quản lý thực đơn, đi chợ tiện lợi và tích hợp cổng quản trị nội dung toàn diện.
 
 ---
 
-## 👨‍💻 Thông Tin Tác Giả & Bản Quyền Độc Quyền
+##  Thông Tin Tác Giả & Bản Quyền Độc Quyền
 
-- **Họ và tên tác giả:** Phan Xuân Tứ (Tuno)
+- **Họ và tên tác giả:** Nguyễn Xuân Tú (Tuno)
 - **Mã số sinh viên:** 23010538
 - **Đơn vị đào tạo:** Khoa Công nghệ Thông tin - Trường Đại học Phenikaa (Phenikaa University)
 - **Học phần:** Web Nâng Cao
 - **Đề tài đồ án:** Xây dựng hệ thống mạng xã hội chia sẻ công thức ẩm thực thông minh Cookio
 - **Mã nguồn chính thức:** [https://github.com/XuanTu138960/cooking-webnangcao](https://github.com/XuanTu138960/cooking-webnangcao)
-- **Tuyên bố bản quyền:** *Toàn bộ ý tưởng, giao diện thiết kế, cơ sở dữ liệu và mã nguồn của dự án này thuộc quyền sở hữu độc quyền của sinh viên **Phan Xuân Tứ**. Mọi hành vi sao chép phục vụ mục đích thương mại khi chưa có sự đồng ý đều là vi phạm quyền tác giả.*
+- **Tuyên bố bản quyền:** *Toàn bộ ý tưởng, giao diện thiết kế, cơ sở dữ liệu và mã nguồn của dự án này thuộc quyền sở hữu độc quyền của sinh viên **Nguyễn Xuân Tú**. Mọi hành vi sao chép phục vụ mục đích thương mại khi chưa có sự đồng ý đều là vi phạm quyền tác giả.*
 
 ---
 
-## 🌟 Tính Năng Nổi Bật
+##  Tính Năng Nổi Bật
 
-### 1. 🥘 Kho Dữ Liệu Chuẩn & 100% Ảnh Thực Phẩm Thật Sắc Nét
+### 1.  Kho Dữ Liệu Chuẩn & 100% Ảnh Thực Phẩm Thật Sắc Nét
 - **Bộ sưu tập công thức nấu ăn phong phú**: Đa dạng các món ăn truyền thống 3 miền Bắc - Trung - Nam, món Á - Âu, món chay thanh tịnh, món ăn kiêng Healthy & Eat Clean.
 - **Đồng bộ hóa 100% ảnh món ăn thật**: Toàn bộ món ăn hiển thị ảnh chụp thật chân thực, độ phân giải cao chuẩn ẩm thực Việt (loại bỏ hoàn toàn ảnh đĩa than, ảnh dimsum hay ảnh minh họa sai lệch).
 - **Quy chuẩn đăng bài nghiêm ngặt**: Yêu cầu bắt buộc tải lên ảnh thành phẩm thực tế của món ăn (`required`), kiểm tra định dạng và kích thước an toàn.
 - **51 bài viết Kinh Nghiệm Hay & Mẹo Vặt Nhà Bếp**: Kho tàng bí quyết nấu nướng, sơ chế, khử mùi tanh, hầm gân bò nhanh mềm, luộc gà cúng cánh tiên da vàng óng và kỹ thuật thắng nước màu caramel đẹp tự nhiên.
 
-### 2. 🔍 Giao Diện Bếp Nhà & Thanh Tìm Kiếm Đẳng Cấp YummyDay
+### 2.  Giao Diện Bếp Nhà & Thanh Tìm Kiếm Đẳng Cấp YummyDay
 - **Thanh tìm kiếm dạng viên thuốc (Pill-box 9999px)**: Mô phỏng chuẩn mực giao diện YummyDay với nền trắng tinh khôi, viền mềm mại, icon kính lúp nâu sẫm (`#4a1c17`), placeholder *"Tìm theo tên món"* và nút bấm tròn màu nâu sẫm chứa kính lúp trắng thanh lịch.
 - **Thuật toán ranh giới từ chính xác (Word-Boundary Precision Regex Matching)**: Khắc phục triệt để nhược điểm của phép so khớp `LIKE` thông thường:
   - Tìm kiếm **`bò`**: Chỉ xuất hiện chính xác các món chứa thịt bò (*Bò xào hành tây, Phở bò, Bò né hoa thiên lý, Canh thịt bò, Bò xào tỏi, Bông cải xào bò*). Tuyệt đối **không** nhầm sang *bánh bông lan, cá bống, bột nêm*.
   - Tìm kiếm **`gà`**: Chỉ lọc đúng các món từ thịt gà (*Gà hấp lá chanh, Salad ức gà, Cơm chiên gà xối mỡ, Súp gà, Gà hấp hành, Miến lòng gà, Gà xào hạt điều*).
 
-### 3. 🎯 Khám Phá Theo Sở Thích & Trích Xuất Món Ăn Đại Diện Chuẩn 100%
+### 3.  Khám Phá Theo Sở Thích & Trích Xuất Món Ăn Đại Diện Chuẩn 100%
 - Bấm vào bất kỳ vòng tròn nguyên liệu tươi ngon nào (*Bắp cải, Bò, Bông cải, Cá, Cà chua, Ốc, Cua, Đậu hũ, Dứa, Dưa chua, Tôm, Gà*), hệ thống ngay lập tức trích xuất đúng **món ăn đại diện chuẩn xác kèm ảnh thật**:
   - Click **Bắp cải** $\rightarrow$ Ra món *"Bắp cải luộc chấm trứng dầm nước mắm"* (ID 36).
   - Click **Bông cải** $\rightarrow$ Ra món *"Bông cải xanh xào thịt bò tỏi thơm ngọt"* (ID 37).
@@ -41,21 +41,21 @@
   - Click **Dứa** $\rightarrow$ Ra món *"Thịt ba chỉ xào dứa chua ngọt đậm đà đưa cơm"* (ID 40).
 - Hệ thống áp dụng cơ chế tự động chống lưu bộ nhớ đệm (Cache-Busting `?v=timestamp`), đảm bảo ảnh nguyên liệu tươi sống hiển thị mới tinh 100% trên mọi trình duyệt.
 
-### 4. 🔔 Logo Thông Báo Chiếc Chuông Tương Phản Sắc Nét & Dữ Liệu Thật
+### 4.  Logo Thông Báo Chiếc Chuông Tương Phản Sắc Nét & Dữ Liệu Thật
 - **Biểu tượng Chiếc Chuông sắc sảo**: Được thiết kế chuẩn vector chiếc chuông đen đặc khép kín với độ tương phản cao, nổi bật rõ nét trên thanh điều hướng.
 - **Hiển thị vượt trội trong Chế độ Ban Đêm**: Nút chuông được bao bọc bởi thẻ tròn phát quang viền cam ấm, xóa bỏ hoàn toàn hiện tượng chìm màu hoặc vòng tròn mờ tối trước đây.
 - **17 Thông báo thực tế trên tài khoản `admin1111`**: Khi đăng nhập tài khoản quản trị, biểu tượng chuông hiển thị huy hiệu tròn đỏ rực (`#ef4444`) với **17 thông báo thật** gồm lượt thả tim, bình luận và lời mời theo dõi từ cộng đồng bếp, hỗ trợ lọc theo tab: *Tất cả*, *Yêu thích*, *Bình luận*, *Theo dõi*.
 
-### 5. 🌙 Chế Độ Bếp Ban Đêm (High-Contrast Dark Mode) Tối Ưu Nổi Bật Nút Bấm
+### 5.  Chế Độ Bếp Ban Đêm (High-Contrast Dark Mode) Tối Ưu Nổi Bật Nút Bấm
 - Chuyển đổi giao diện Sáng / Tối chỉ với 1 cú click, bảo vệ thị lực khi nấu nướng trong không gian bếp thiếu sáng.
 - **Gia cường độ tương phản cao (High-Contrast)**: Toàn bộ các nút bấm (+ Viết món mới, Đăng nhập, Nút cuộn lên đầu trang, Nút lọc chuyên mục, Nút tìm kiếm) đều có độ tương phản đạt chuẩn WCAG AA/AAA, không bị chìm hay biến dạng trên nền đen/slate.
 
-### 6. 🧊 Tủ Lạnh Thông Minh 2.0 (Smart Fridge Recipe Matcher)
+### 6.  Tủ Lạnh Thông Minh 2.0 (Smart Fridge Recipe Matcher)
 - **Nấu ngon từ nguyên liệu sẵn có**: Người dùng chọn các nguyên liệu đang có trong bếp (thịt bò, thịt heo, cá, tôm, trứng, rau củ,...).
 - **Thuật toán gợi ý thông minh**: Đếm số nguyên liệu trùng khớp, tính toán phần trăm độ phù hợp và sắp xếp ưu tiên các món có thể nấu ngay nhằm chống lãng phí thực phẩm.
 - **Gợi ý mua bổ sung**: Liệt kê rõ những gia vị hoặc nguyên liệu phụ còn thiếu để hoàn thiện món ăn.
 
-### 7. 🛒 Món Yêu Thích & Đi Chợ Thông Minh (Smart Grocery Checklist)
+### 7.  Món Yêu Thích & Đi Chợ Thông Minh (Smart Grocery Checklist)
 - **Quản lý món yêu thích & thả tim**:
   - Lưu món ăn để xem lại (`Bookmark`) và Thả tim (`Like`).
   - Thao tác thả tim / bỏ thích nhanh chóng chỉ với 1-Click trực tiếp từ cơ sở dữ liệu thật.
@@ -65,22 +65,22 @@
   - Tự động bóc tách và tổng hợp danh sách nguyên liệu cần mua thành bảng kiểm (checklist) thông minh.
   - Hỗ trợ đánh dấu đã mua và nút **"Sao chép danh sách đi chợ"** 1-Click để gửi qua tin nhắn/Zalo.
 
-### 8. 👨‍🍳 Trải Nghiệm Nấu Nướng Thực Tế Đỉnh Cao
+### 8.  Trải Nghiệm Nấu Nướng Thực Tế Đỉnh Cao
 - **Chế độ nấu rảnh tay (Hands-Free Cooking Mode)**: Giao diện toàn màn hình với cỡ chữ lớn, tối ưu thao tác khi tay dính nước hoặc dầu mỡ trong bếp.
 - **Đồng hồ bấm giờ nhà bếp (Kitchen Timer)**: Tích hợp bộ đếm giờ thông minh có âm thanh chuông báo Web Audio API khi đến giờ tắt bếp.
 - **Bộ điều chỉnh khẩu phần động (Servings Scaler)**: Tự động nhân/chia định lượng nguyên liệu tương ứng theo số người ăn (1 người, 2 người, 4 người, mâm cỗ 8 người,...).
 - **In công thức chuẩn khổ giấy (Print Recipe)**: Tự động loại bỏ các thành phần web thừa, tối ưu bản in sạch đẹp để mang vào gian bếp.
 
-### 9. 📜 4 Chính Sách Mô Phỏng Chuẩn Mực YummyDay & Bản Quyền Độc Quyền
+### 9.  4 Chính Sách Mô Phỏng Chuẩn Mực & Bản Quyền Độc Quyền
 Mô phỏng đầy đủ 4 chuyên trang pháp lý và minh bạch nội dung ở phần chân trang (Footer):
-- **📖 Giới thiệu:** Tuyên ngôn sứ mệnh ẩm thực Cookio và xác lập **Bản quyền độc quyền tác giả Phan Xuân Tứ (MSSV: 23010538 - Đại học Phenikaa)**.
-- **📢 Chính sách quảng cáo:** Nguyên tắc quảng cáo sạch, không pop-up phiền nhiễu, ưu tiên nông sản Việt VietGAP/OCOP.
-- **🛡️ Chính sách bảo mật:** Cam kết mã hóa mật khẩu bcrypt, chống tấn công CSRF và không chia sẻ dữ liệu cho bên thứ ba.
-- **⚖️ Miễn trừ trách nhiệm:** Hướng dẫn an toàn dị ứng thực phẩm và an toàn lao động trong gian bếp.
+- ** Giới thiệu:** Tuyên ngôn sứ mệnh ẩm thực Cookio và xác lập **Bản quyền độc quyền tác giả Nguyễn Xuân Tú (MSSV: 23010538 - Đại học Phenikaa)**.
+- ** Chính sách quảng cáo:** Nguyên tắc quảng cáo sạch, không pop-up phiền nhiễu, ưu tiên nông sản Việt VietGAP/OCOP.
+- ** Chính sách bảo mật:** Cam kết mã hóa mật khẩu bcrypt, chống tấn công CSRF và không chia sẻ dữ liệu cho bên thứ ba.
+- ** Miễn trừ trách nhiệm:** Hướng dẫn an toàn dị ứng thực phẩm và an toàn lao động trong gian bếp.
 
 ---
 
-## 🛠️ Ngăn Xếp Công Nghệ (Tech Stack)
+##  Ngăn Xếp Công Nghệ (Tech Stack)
 
 | Thành phần | Công nghệ sử dụng | Mục đích & Đặc tính |
 | :--- | :--- | :--- |
@@ -92,7 +92,7 @@ Mô phỏng đầy đủ 4 chuyên trang pháp lý và minh bạch nội dung �
 
 ---
 
-## 📁 Cấu Trúc Thư Mục Dự Án (Project Structure)
+##  Cấu Trúc Thư Mục Dự Án (Project Structure)
 
 ```text
 cooking-webnangcao-main/
@@ -141,7 +141,7 @@ cooking-webnangcao-main/
 
 ---
 
-## 🚀 Hướng Dẫn Cài Đặt & Khởi Chạy
+## Hướng Dẫn Cài Đặt & Khởi Chạy
 
 Bạn có thể chạy dự án theo 1 trong 2 cách dưới đây:
 
@@ -178,7 +178,7 @@ Hệ thống đã được đóng gói hoàn chỉnh gồm **PHP 8.2 Apache** v�
 
 ---
 
-## 🔑 Tài Khoản Trải Nghiệm Mẫu
+##  Tài Khoản Trải Nghiệm Mẫu
 
 Tất cả các tài khoản thử nghiệm trên hệ thống đều được tích hợp mật khẩu tiện ích: **`1`** (hoặc `123456`):
 
@@ -195,7 +195,7 @@ Tất cả các tài khoản thử nghiệm trên hệ thống đều được t
 
 ---
 
-## 🔒 Tiêu Chuẩn Bảo Mật & Dữ Liệu Sạch (OWASP Standards)
+##  Tiêu Chuẩn Bảo Mật & Dữ Liệu Sạch (OWASP Standards)
 
 - **100% Tương tác thật - Không Bot rác**: Toàn bộ dữ liệu tài khoản, bài viết, lượt thả tim (`recipe_likes`), thông báo (`notifications`) và bình luận (`comments`) đều là dữ liệu thực tế từ cộng đồng, không dùng số liệu ngẫu nhiên giả tạo.
 - **Bảo vệ CSRF 100%**: Tất cả các thao tác thêm, sửa, xóa, duyệt bài (POST request) đều được xác thực bằng mã Token ngẫu nhiên theo phiên làm việc (`csrf_token()`).
@@ -206,7 +206,7 @@ Tất cả các tài khoản thử nghiệm trên hệ thống đều được t
 
 ---
 
-## 📜 Bản Quyền Độc Quyền & Tuyên Bố Bản Quyền
+##  Bản Quyền Độc Quyền & Tuyên Bố Bản Quyền
 
 ```text
 ================================================================================
