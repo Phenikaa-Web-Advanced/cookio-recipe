@@ -237,18 +237,18 @@ if (isset($_SESSION['user_id'])) {
                 </a>
             </div>
 
-            <!-- Top Search Pill (Thiết kế thanh tìm kiếm chuyên nghiệp) -->
+            <!-- Top Search Pill (Khớp 100% Ảnh 1 YummyDay) -->
             <div class="yummy-top-search-wrap">
                 <form method="get" action="<?= BASE_URL ?>/index.php" class="yummy-search-form" id="yummySearchForm">
-                    <svg class="y-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="y-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
-                    <input type="text" name="q" placeholder="Tìm kiếm món ăn, nguyên liệu, bí quyết..." value="<?= e($_GET['q'] ?? '') ?>" autocomplete="off">
+                    <input type="text" name="q" placeholder="Tìm theo tên món" value="<?= e($_GET['q'] ?? '') ?>" autocomplete="off">
                     <button type="submit" class="btn-yummy-search-go" title="Tìm kiếm" aria-label="Tìm kiếm">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                         </svg>
                     </button>
                 </form>
@@ -317,11 +317,11 @@ if (isset($_SESSION['user_id'])) {
                         + Viết món mới
                     </a>
 
-                    <!-- Notification Bell (Khớp Ảnh 1: Hiện rõ logo hình cái chuông thông báo) -->
+                    <!-- Notification Bell (Khớp Ảnh 3: Hình chiếc chuông đen/cam tương phản sắc nét) -->
                     <div class="notification-wrapper">
                         <button type="button" class="notification-btn" id="btnNotifications" title="Thông báo" aria-label="Thông báo" onclick="toggleNotificationsDropdown()">
-                            <svg class="cookio-bell-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+                            <svg class="cookio-bell-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2a2 2 0 0 0-2 2c0 .08.01.16.02.24C7.14 4.87 5 7.68 5 11v4.5l-2 2V19h18v-1.5l-2-2V11c0-3.32-2.14-6.13-5.02-6.76.01-.08.02-.16.02-.24a2 2 0 0 0-2-2zm0 19a3 3 0 0 1-2.83-2h5.66A3 3 0 0 1 12 21z"/>
                             </svg>
                             <span class="notif-badge" id="notifBadge" style="display: none;">0</span>
                         </button>
@@ -360,10 +360,10 @@ if (isset($_SESSION['user_id'])) {
                         + Viết món mới
                     </button>
 
-                    <!-- Nút Chuông Thông Báo (Click mở form Đăng nhập nếu chưa đăng nhập) -->
+                    <!-- Nút Chuông Thông Báo (Khớp Ảnh 3: Hình chiếc chuông đen/cam tương phản cao) -->
                     <button type="button" class="notification-btn" title="Thông báo" aria-label="Thông báo" data-open-login>
-                        <svg class="cookio-bell-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+                        <svg class="cookio-bell-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2a2 2 0 0 0-2 2c0 .08.01.16.02.24C7.14 4.87 5 7.68 5 11v4.5l-2 2V19h18v-1.5l-2-2V11c0-3.32-2.14-6.13-5.02-6.76.01-.08.02-.16.02-.24a2 2 0 0 0-2-2zm0 19a3 3 0 0 1-2.83-2h5.66A3 3 0 0 1 12 21z"/>
                         </svg>
                     </button>
 

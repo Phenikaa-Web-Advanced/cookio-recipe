@@ -67,18 +67,20 @@
                 </a>
             </div>
             <ul class="y-footer-policy-links">
-                <li><a href="javascript:void(0)">Giới thiệu</a></li>
-                <li><a href="javascript:void(0)">Chính sách quảng cáo</a></li>
-                <li><a href="javascript:void(0)">Chính sách bảo mật</a></li>
-                <li><a href="javascript:void(0)">Miễn trừ trách nhiệm</a></li>
+                <li><a href="<?= BASE_URL ?>/views/policy.php?tab=about">Giới thiệu</a></li>
+                <li><a href="<?= BASE_URL ?>/views/policy.php?tab=ads">Chính sách quảng cáo</a></li>
+                <li><a href="<?= BASE_URL ?>/views/policy.php?tab=privacy">Chính sách bảo mật</a></li>
+                <li><a href="<?= BASE_URL ?>/views/policy.php?tab=disclaimer">Miễn trừ trách nhiệm</a></li>
             </ul>
         </div>
     </div>
 
-    <!-- Hàng đáy: Bản quyền & Huy hiệu DMCA -->
+    <!-- Hàng đáy: Bản quyền độc quyền của riêng Phan Xuân Tứ (Tuno) -->
     <div class="yummy-footer-bottom">
-        <p class="y-footer-copy">Copyright &copy; <?= date('Y') ?> Cookio. All Right Reserved.</p>
-        <div class="dmca-badge" title="DMCA Protected">
+        <p class="y-footer-copy">
+            Bản quyền độc quyền &copy; <?= date('Y') ?> thuộc về <strong>Phan Xuân Tứ (Tuno)</strong> - MSSV: 23010538 - Đại học Phenikaa. All Rights Reserved.
+        </p>
+        <div class="dmca-badge" title="DMCA Protected - Bản quyền tác giả Phan Xuân Tứ">
             <span class="dmca-green">DMCA</span>
             <span class="dmca-white">PROTECTED</span>
         </div>

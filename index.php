@@ -506,7 +506,7 @@ $isDefaultHome = ($searchQuery === '' && $selectedCategory === '' && $filterTime
                     <?php foreach ($ingredientsList as $ing): ?>
                         <a href="<?= BASE_URL ?>/index.php?q=<?= urlencode($ing['q']) ?>" class="ing-circle-item">
                             <div class="ing-circle-img-wrap">
-                                <img src="<?= BASE_URL ?>/<?= $ing['img'] ?>" alt="<?= e($ing['name']) ?>" class="ing-circle-img" loading="lazy">
+                                <img src="<?= BASE_URL ?>/<?= $ing['img'] ?>?v=<?= file_exists(__DIR__ . '/' . $ing['img']) ? filemtime(__DIR__ . '/' . $ing['img']) : '20261106' ?>" alt="<?= e($ing['name']) ?>" class="ing-circle-img" loading="lazy">
                             </div>
                             <span class="ing-circle-name"><?= e($ing['name']) ?></span>
                         </a>

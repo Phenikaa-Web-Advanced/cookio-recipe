@@ -258,7 +258,7 @@ $allTipsList = [
                 <?php foreach ($ingredients as $ing): ?>
                     <a href="<?= BASE_URL ?>/index.php?q=<?= urlencode($ing['q']) ?>" class="ing-circle-item" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; min-width: 90px; text-align: center; group">
                         <div style="width: 86px; height: 86px; border-radius: 50%; overflow: hidden; border: 2.5px solid #fed7aa; box-shadow: 0 4px 10px rgba(0,0,0,0.08); transition: transform 0.25s, border-color 0.25s;">
-                            <img src="<?= BASE_URL ?>/<?= $ing['img'] ?>" alt="<?= e($ing['name']) ?>" style="width: 100%; height: 100%; object-fit: cover; display: block;" loading="lazy">
+                            <img src="<?= BASE_URL ?>/<?= $ing['img'] ?>?v=<?= file_exists(__DIR__ . '/../' . $ing['img']) ? filemtime(__DIR__ . '/../' . $ing['img']) : '20261106' ?>" alt="<?= e($ing['name']) ?>" style="width: 100%; height: 100%; object-fit: cover; display: block;" loading="lazy">
                         </div>
                         <span style="margin-top: 0.65rem; font-size: 0.92rem; font-weight: 700; color: #3e1713; white-space: nowrap;">
                             <?= e($ing['name']) ?>
@@ -291,7 +291,7 @@ $allTipsList = [
                 <article class="featured-tip-card" style="background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.06); border: 1px solid #f3f4f6; display: flex; flex-direction: column; transition: transform 0.25s, box-shadow 0.25s; cursor: pointer;" onclick="openTipModal(<?= (int)$t['id'] ?>)">
                     <!-- Card Thumbnail with Badge -->
                     <div style="position: relative; width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #f3f4f6;">
-                        <img src="<?= BASE_URL ?>/<?= $t['image'] ?>" alt="<?= e($t['title']) ?>" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s;" loading="lazy">
+                        <img src="<?= BASE_URL ?>/<?= $t['image'] ?>?v=<?= file_exists(__DIR__ . '/../' . $t['image']) ? filemtime(__DIR__ . '/../' . $t['image']) : '20261106' ?>" alt="<?= e($t['title']) ?>" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s;" loading="lazy">
                         <span style="position: absolute; top: 0.75rem; left: 0.75rem; background: rgba(30, 27, 27, 0.78); backdrop-filter: blur(4px); color: #ffffff; font-size: 0.76rem; font-weight: 700; padding: 0.3rem 0.75rem; border-radius: 9999px;">
                             Kinh nghiệm hay
                         </span>
@@ -332,7 +332,7 @@ $allTipsList = [
                 <article class="horizontal-tip-card <?= $isExtra ? 'tip-item-extra' : '' ?>" style="display: <?= $isExtra ? 'none' : 'flex' ?>; gap: 1.5rem; align-items: center; background: #ffffff; border-radius: 16px; padding: 1rem; border: 1px solid #f3f4f6; box-shadow: 0 3px 12px rgba(0,0,0,0.04); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer;" onclick="openTipModal(<?= (int)$item['id'] ?>)">
                     <!-- Left Photo -->
                     <div style="position: relative; width: 190px; height: 130px; border-radius: 12px; overflow: hidden; flex-shrink: 0; background: #f3f4f6;">
-                        <img src="<?= BASE_URL ?>/<?= $item['image'] ?>" alt="<?= e($item['title']) ?>" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+                        <img src="<?= BASE_URL ?>/<?= $item['image'] ?>?v=<?= file_exists(__DIR__ . '/../' . $item['image']) ? filemtime(__DIR__ . '/../' . $item['image']) : '20261106' ?>" alt="<?= e($item['title']) ?>" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
                         <span style="position: absolute; top: 0.5rem; left: 0.5rem; background: rgba(30, 27, 27, 0.78); backdrop-filter: blur(4px); color: #ffffff; font-size: 0.72rem; font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 9999px;">
                             Kinh nghiệm hay
                         </span>
