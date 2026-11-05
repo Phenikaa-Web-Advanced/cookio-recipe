@@ -47,9 +47,8 @@
 
 ##  Cài Đặt & Khởi Chạy
 
-### Cách 1: Khởi Chạy Nhanh Bằng Docker (Khuyến nghị - Dữ liệu mới & hoàn toàn độc lập)
-Dự án được cấu hình chạy Docker cô lập hoàn toàn (cổng riêng `8088`, database MariaDB cổng `3308`, volume độc lập `webnangcao_cooking_db_data`), tránh trùng lặp dữ liệu hay xung đột cổng với bất kỳ dự án nào khác.
-
+### Cách 1: Khởi Chạy Nhanh Bằng Docker (Khuyến nghị )
+Dự án được cấu hình chạy Docker cô lập hoàn toàn (cổng riêng `8088`, database MariaDB cổng `3308`, volume độc lập `webnangcao_cooking_db_data`)
 1. **Khởi chạy container**:
    ```bash
    docker compose up -d --build
