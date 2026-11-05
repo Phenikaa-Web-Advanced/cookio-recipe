@@ -47,7 +47,7 @@ $menuCategories = ['Tất cả', 'Món xào', 'Món canh', 'Món kho', 'Món h�
             <!-- Live Search Bar -->
             <div style="position: relative; width: 100%;">
                 <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); font-size: 1.1rem; color: #9a3412;">🔍</span>
-                <input type="text" id="menuModalSearchInput" oninput="filterMenuRecipes()" placeholder="Tìm nhanh theo tên món (VD: bò xào, cá kho, súp gà, nem rán...)" style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.75rem; border-radius: 9999px; border: 1.5px solid #fed7aa; background: #ffffff; font-size: 0.92rem; outline: none; font-family: inherit; color: #1e293b; box-shadow: 0 2px 6px rgba(0,0,0,0.02); transition: border-color 0.2s;">
+                <input type="text" id="menuModalSearchInput" oninput="filterMenuRecipes()" placeholder="Tìm nhanh theo tên món (VD: bò xào, cá kho, súp gà, sườn nướng...)" style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.75rem; border-radius: 9999px; border: 1.5px solid #fed7aa; background: #ffffff; font-size: 0.92rem; outline: none; font-family: inherit; color: #1e293b; box-shadow: 0 2px 6px rgba(0,0,0,0.02); transition: border-color 0.2s;">
             </div>
 
             <!-- Categories Tabs -->

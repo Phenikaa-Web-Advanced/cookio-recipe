@@ -190,9 +190,9 @@ $allTipsList = [
     ],
     [
         'id' => 11,
-        'title' => 'Cách gói và chiên nem rán truyền thống giòn rụm không vỡ',
-        'desc' => 'Bí quyết phết dấm đường lên bánh đa nem và chiên 2 lần dầu giòn tan cả ngày — bí quyết Cookio.',
-        'image' => 'assets/images/real_dishes/nem-ran-truyen-thong.jpg',
+        'title' => 'Bí quyết đổ bánh xèo miền Tây viền mỏng giòn rụm lâu',
+        'desc' => 'Công thức pha bột gạo cốt dừa thêm bia và chiên chảo gang giòn tan rụm — bí quyết Cookio.',
+        'image' => 'assets/images/real_dishes/banh-xeo-mien-tay.jpg',
         'time' => '40p',
         'difficulty' => 'Trung bình'
     ],

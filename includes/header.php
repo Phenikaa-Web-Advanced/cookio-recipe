@@ -240,13 +240,13 @@ if (isset($_SESSION['user_id'])) {
             <!-- Top Search Pill (Thiết kế thanh tìm kiếm chuyên nghiệp) -->
             <div class="yummy-top-search-wrap">
                 <form method="get" action="<?= BASE_URL ?>/index.php" class="yummy-search-form" id="yummySearchForm">
-                    <svg class="y-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="y-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
-                    <input type="text" name="q" placeholder="Tìm kiếm món ăn, nguyên liệu, bí quyết..." value="<?= e($_GET['q'] ?? '') ?>" autocomplete="off" onclick="openHorizontalSearch()">
+                    <input type="text" name="q" placeholder="Tìm kiếm món ăn, nguyên liệu, bí quyết..." value="<?= e($_GET['q'] ?? '') ?>" autocomplete="off">
                     <button type="submit" class="btn-yummy-search-go" title="Tìm kiếm" aria-label="Tìm kiếm">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="5" y1="12" x2="19" y2="12"></line>
                             <polyline points="12 5 19 12 12 19"></polyline>
                         </svg>
@@ -320,9 +320,8 @@ if (isset($_SESSION['user_id'])) {
                     <!-- Notification Bell (Khớp Ảnh 1: Hiện rõ logo hình cái chuông thông báo) -->
                     <div class="notification-wrapper">
                         <button type="button" class="notification-btn" id="btnNotifications" title="Thông báo" aria-label="Thông báo" onclick="toggleNotificationsDropdown()">
-                            <svg class="cookio-bell-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                            <svg class="cookio-bell-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
                             </svg>
                             <span class="notif-badge" id="notifBadge" style="display: none;">0</span>
                         </button>
@@ -348,8 +347,8 @@ if (isset($_SESSION['user_id'])) {
                         <span><?= e((string) $_SESSION['username']) ?></span>
                     </a>
 
-                    <a href="<?= BASE_URL ?>/logout.php" style="color: #64748b; font-size: 0.88rem; display: flex; align-items: center;" title="Đăng xuất">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <a href="<?= BASE_URL ?>/logout.php" class="btn-header-logout" style="width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #64748b; transition: all 0.2s;" title="Đăng xuất khỏi tài khoản">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                             <polyline points="16 17 21 12 16 7"></polyline>
                             <line x1="21" y1="12" x2="9" y2="12"></line>
@@ -363,9 +362,8 @@ if (isset($_SESSION['user_id'])) {
 
                     <!-- Nút Chuông Thông Báo (Click mở form Đăng nhập nếu chưa đăng nhập) -->
                     <button type="button" class="notification-btn" title="Thông báo" aria-label="Thông báo" data-open-login>
-                        <svg class="cookio-bell-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        <svg class="cookio-bell-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
                         </svg>
                     </button>
 
