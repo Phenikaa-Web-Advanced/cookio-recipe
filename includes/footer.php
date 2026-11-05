@@ -96,7 +96,7 @@
 <?php require_once __DIR__ . '/modal-login.php'; ?>
 <script src="<?= BASE_URL ?>/assets/js/app.js"></script>
 <?php if (isset($loadSmartFridgeScript) && $loadSmartFridgeScript): ?>
-    <script src="<?= BASE_URL ?>/assets/js/smart-fridge.js"></script>
+    <script src="<?= BASE_URL ?>/assets/js/smart-fridge.js?v=<?= file_exists(__DIR__ . '/../assets/js/smart-fridge.js') ? filemtime(__DIR__ . '/../assets/js/smart-fridge.js') : '20261106' ?>"></script>
 <?php endif; ?>
 </body>
 </html>

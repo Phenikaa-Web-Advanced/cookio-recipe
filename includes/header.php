@@ -237,20 +237,14 @@ if (isset($_SESSION['user_id'])) {
                 </a>
             </div>
 
-            <!-- Top Search Pill (Khớp 100% Ảnh 1 YummyDay) -->
+            <!-- Top Search Pill (Đã xóa nút tròn màu nâu theo yêu cầu) -->
             <div class="yummy-top-search-wrap">
-                <form method="get" action="<?= BASE_URL ?>/index.php" class="yummy-search-form" id="yummySearchForm">
+                <form method="get" action="<?= BASE_URL ?>/index.php" class="yummy-search-form" id="yummySearchForm" style="padding: 0.45rem 1.25rem;">
                     <svg class="y-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
-                    <input type="text" name="q" placeholder="Tìm theo tên món" value="<?= e($_GET['q'] ?? '') ?>" autocomplete="off">
-                    <button type="submit" class="btn-yummy-search-go" title="Tìm kiếm" aria-label="Tìm kiếm">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
-                    </button>
+                    <input type="text" name="q" placeholder="Tìm theo tên món" value="<?= e($_GET['q'] ?? '') ?>" autocomplete="off" style="font-size: 0.95rem; width: 100%;">
                 </form>
             </div>
         </div>
@@ -310,21 +304,27 @@ if (isset($_SESSION['user_id'])) {
                 </a>
             </nav>
 
-            <!-- Right Action Buttons: Viết món mới (Click ra Login nếu chưa đăng nhập) & User Actions -->
+            <!-- Right Action Buttons: Viết món mới & Notification Bell & Auth -->
             <div class="yummy-nav-actions">
                 <?php if (isset($_SESSION['user_id'])): ?>
+                    <?php
+                    $headerUserId = (int) $_SESSION['user_id'];
+                    $headerUnreadCount = (int) db()->query("SELECT COUNT(*) FROM notifications WHERE user_id = $headerUserId AND is_read = 0")->fetchColumn();
+                    ?>
                     <a href="<?= BASE_URL ?>/views/create-recipe.php" class="button button-create" style="padding: 0.45rem 1.1rem; border-radius: 9999px; font-weight: 700; font-size: 0.88rem;">
                         + Viết món mới
                     </a>
 
-                    <!-- Notification Bell (Khớp 100% Ảnh chiếc chuông đen, có khe hở đáy, tương phản cao) -->
+                    <!-- Notification Bell (Khớp 100% Ảnh chiếc chuông đen, có quả lắc tách rời, tương phản cao) -->
                     <div class="notification-wrapper">
-                        <button type="button" class="notification-btn" id="btnNotifications" title="Thông báo" aria-label="Thông báo" onclick="toggleNotificationsDropdown()" style="width: 42px; height: 42px; border-radius: 50%; background: #ffffff; border: 2px solid #ea580c; display: inline-flex; align-items: center; justify-content: center; color: #262626; cursor: pointer; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.12); flex-shrink: 0;">
-                            <svg class="cookio-bell-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display: block; width: 22px; height: 22px; color: #262626; fill: #262626;">
-                                <path d="M12 2a1.75 1.75 0 0 0-1.75 1.75c0 .28.07.54.18.78C7.57 5.23 5.5 8.13 5.5 11.5v3.25L3.8 16.45c-.48.48-.52 1.25-.1 1.78.27.35.7.57 1.15.57h14.3c.45 0 .88-.22 1.15-.57.42-.53.38-1.3-.1-1.78L18.5 14.75V11.5c0-3.37-2.07-6.27-4.93-6.97.11-.24.18-.5.18-.78A1.75 1.75 0 0 0 12 2z"/>
-                                <path d="M9.5 20.25a2.5 2.5 0 0 0 5 0h-5z"/>
+                        <button type="button" class="notification-btn" id="btnNotifications" title="Thông báo" aria-label="Thông báo" onclick="toggleNotificationsDropdown()" style="width: 42px; height: 42px; border-radius: 50%; background: #ffffff; border: 2px solid #ea580c; display: inline-flex; align-items: center; justify-content: center; color: #3e1713; cursor: pointer; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.12); flex-shrink: 0;">
+                            <svg class="cookio-bell-icon" width="22" height="22" viewBox="0 0 24 24" fill="#3e1713" style="display: block; width: 22px; height: 22px; color: #3e1713; fill: #3e1713;">
+                                <path d="M12 2a2 2 0 0 0-2 2c0 .12.01.24.04.35C7.45 5.23 5.5 7.89 5.5 11v4.5l-2 2V19h17v-1.5l-2-2V11c0-3.11-1.95-5.77-4.54-6.65.03-.11.04-.23.04-.35a2 2 0 0 0-2-2z"/>
+                                <path d="M9.5 20.5a2.5 2.5 0 0 0 5 0h-5z"/>
                             </svg>
-                            <span class="notif-badge" id="notifBadge" style="display: none;">0</span>
+                            <span class="notif-badge" id="notifBadge" style="<?= $headerUnreadCount > 0 ? 'display: flex;' : 'display: none;' ?>">
+                                <?= $headerUnreadCount > 9 ? '9+' : $headerUnreadCount ?>
+                            </span>
                         </button>
                         <div class="notification-dropdown" id="notificationDropdown" style="display: none;">
                             <div class="notification-header">
@@ -361,11 +361,11 @@ if (isset($_SESSION['user_id'])) {
                         + Viết món mới
                     </button>
 
-                    <!-- Nút Chuông Thông Báo (Khớp 100% Ảnh chiếc chuông đen, có khe hở đáy, tương phản cao) -->
-                    <button type="button" class="notification-btn" title="Thông báo" aria-label="Thông báo" data-open-login style="width: 42px; height: 42px; border-radius: 50%; background: #ffffff; border: 2px solid #ea580c; display: inline-flex; align-items: center; justify-content: center; color: #262626; cursor: pointer; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.12); flex-shrink: 0;">
-                        <svg class="cookio-bell-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display: block; width: 22px; height: 22px; color: #262626; fill: #262626;">
-                            <path d="M12 2a1.75 1.75 0 0 0-1.75 1.75c0 .28.07.54.18.78C7.57 5.23 5.5 8.13 5.5 11.5v3.25L3.8 16.45c-.48.48-.52 1.25-.1 1.78.27.35.7.57 1.15.57h14.3c.45 0 .88-.22 1.15-.57.42-.53.38-1.3-.1-1.78L18.5 14.75V11.5c0-3.37-2.07-6.27-4.93-6.97.11-.24.18-.5.18-.78A1.75 1.75 0 0 0 12 2z"/>
-                            <path d="M9.5 20.25a2.5 2.5 0 0 0 5 0h-5z"/>
+                    <!-- Nút Chuông Thông Báo (Khớp 100% Ảnh chiếc chuông đen, có quả lắc tách rời, tương phản cao) -->
+                    <button type="button" class="notification-btn" title="Thông báo" aria-label="Thông báo" data-open-login style="width: 42px; height: 42px; border-radius: 50%; background: #ffffff; border: 2px solid #ea580c; display: inline-flex; align-items: center; justify-content: center; color: #3e1713; cursor: pointer; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.12); flex-shrink: 0;">
+                        <svg class="cookio-bell-icon" width="22" height="22" viewBox="0 0 24 24" fill="#3e1713" style="display: block; width: 22px; height: 22px; color: #3e1713; fill: #3e1713;">
+                            <path d="M12 2a2 2 0 0 0-2 2c0 .12.01.24.04.35C7.45 5.23 5.5 7.89 5.5 11v4.5l-2 2V19h17v-1.5l-2-2V11c0-3.11-1.95-5.77-4.54-6.65.03-.11.04-.23.04-.35a2 2 0 0 0-2-2z"/>
+                            <path d="M9.5 20.5a2.5 2.5 0 0 0 5 0h-5z"/>
                         </svg>
                     </button>
 

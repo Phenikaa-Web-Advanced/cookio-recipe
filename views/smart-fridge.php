@@ -122,7 +122,12 @@ require __DIR__ . '/../includes/header.php';
             <?php 
             $imgSrc = !empty($recipe['image_url']) ? BASE_URL . '/' . e($recipe['image_url']) : BASE_URL . '/assets/images/default-recipe.jpg';
             ?>
-            <article class="recipe-card fridge-recipe" data-ingredients="<?= e($recipe['ingredients']) ?>" style="background: #ffffff; border: 1.5px solid #fed7aa; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.25s, box-shadow 0.25s;">
+            <article class="recipe-card fridge-recipe" 
+                     data-title="<?= e(mb_strtolower($recipe['title'])) ?>"
+                     data-ingredients="<?= e(mb_strtolower($recipe['ingredients'])) ?>"
+                     data-category="<?= e(mb_strtolower($recipe['category'] ?? '')) ?>"
+                     data-description="<?= e(mb_strtolower($recipe['description'] ?? '')) ?>"
+                     style="background: #ffffff; border: 1.5px solid #fed7aa; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.25s, box-shadow 0.25s;">
                 <div>
                     <!-- Ảnh món ăn -->
                     <div class="recipe-card-media" style="position: relative; width: 100%; aspect-ratio: 16/10; overflow: hidden; background: #fdfbf7;">

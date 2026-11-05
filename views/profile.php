@@ -73,6 +73,20 @@ $stmtFollowed = db()->prepare("
 $stmtFollowed->execute([$userId]);
 $followedChefs = $stmtFollowed->fetchAll();
 
+// Danh sách món yêu thích của tài khoản này từ bảng saved_recipes (Liên kết với Kho món ăn)
+$stmtFavs = db()->prepare("
+    SELECT r.*, u.username AS author_name,
+           (SELECT COUNT(*) FROM recipe_likes WHERE recipe_id = r.id) AS likes_count
+    FROM saved_recipes sr
+    JOIN recipes r ON r.id = sr.recipe_id
+    JOIN users u ON u.id = r.author_id
+    WHERE sr.user_id = ?
+    ORDER BY sr.created_at DESC
+    LIMIT 6
+");
+$stmtFavs->execute([$userId]);
+$favoriteRecipes = $stmtFavs->fetchAll();
+
 $showEditByDefault = isset($_GET['edit']) && $_GET['edit'] === '1';
 ?>
 <div class="recipe-detail-container" style="padding-top: 1.5rem; padding-bottom: 3.5rem;">
@@ -183,6 +197,12 @@ $showEditByDefault = isset($_GET['edit']) && $_GET['edit'] === '1';
                 <div class="cookio-stat-value" style="color: #eab308;">⭐ <?= $avgRating ?></div>
                 <div class="cookio-stat-label">Điểm đánh giá</div>
             </div>
+
+            <!-- 7. Món yêu thích (Liên kết trực tiếp tới trang Món yêu thích & Đi chợ) -->
+            <a href="<?= BASE_URL ?>/views/saved-recipes.php" class="cookio-stat-item" style="text-decoration: none; color: inherit; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+                <div class="cookio-stat-value" style="color: #ec4899;"><?= $savedRecipes ?></div>
+                <div class="cookio-stat-label">Món yêu thích &rarr;</div>
+            </a>
         </div>
     </div>
 
@@ -274,6 +294,78 @@ $showEditByDefault = isset($_GET['edit']) && $_GET['edit'] === '1';
                 </form>
             </details>
         </div>
+    </div>
+
+    <!-- =====================================================================
+         CHẾ ĐỘ 3: MÓN ĂN YÊU THÍCH & KHO MÓN ĂN COOKIO (KHỚP YÊU CẦU 7)
+         ===================================================================== -->
+    <div class="cookio-profile-card" style="padding: 2rem 2.25rem; margin-top: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; border-bottom: 1.5px solid #ffedd5; padding-bottom: 1rem;">
+            <div>
+                <h2 style="font-size: 1.25rem; font-weight: 800; color: #3e1713; margin: 0 0 0.35rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span style="color: #ea580c;">❤️</span> Món Ăn Yêu Thích Của Bạn (<?= $savedRecipes ?>)
+                </h2>
+                <p style="color: #64748b; font-size: 0.88rem; margin: 0;">
+                    Những món ăn ngon bạn đã lưu để nấu cho gia đình hoặc tham khảo bí quyết
+                </p>
+            </div>
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <a href="<?= BASE_URL ?>/views/saved-recipes.php" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1.15rem; background: #fff7ed; border: 1.5px solid #fed7aa; border-radius: 9999px; color: #ea580c; text-decoration: none; font-weight: 700; font-size: 0.88rem; transition: all 0.2s;">
+                    📑 Quản lý & Đi chợ
+                </a>
+                <a href="<?= BASE_URL ?>/index.php" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1.25rem; background: #ea580c; border: 1.5px solid #ea580c; border-radius: 9999px; color: #ffffff; text-decoration: none; font-weight: 700; font-size: 0.88rem; box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25); transition: all 0.2s;">
+                    🍳 Khám Phá Kho Món Ăn Cookio &rarr;
+                </a>
+            </div>
+        </div>
+
+        <?php if (!empty($favoriteRecipes)): ?>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem;">
+                <?php foreach ($favoriteRecipes as $fav): ?>
+                    <?php $img = !empty($fav['image_url']) ? BASE_URL . '/' . e($fav['image_url']) : BASE_URL . '/assets/images/default-recipe.jpg'; ?>
+                    <div style="background: #ffffff; border: 1.5px solid #fed7aa; border-radius: 18px; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,0.04); display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
+                        <div>
+                            <div style="position: relative; aspect-ratio: 16/10; overflow: hidden;">
+                                <img src="<?= $img ?>" alt="<?= e($fav['title']) ?>" style="width: 100%; height: 100%; object-fit: cover;">
+                                <span style="position: absolute; top: 0.65rem; left: 0.65rem; background: rgba(30,27,27,0.8); backdrop-filter: blur(4px); color: #fff; font-size: 0.72rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 9999px;">
+                                    <?= e($fav['category'] ?? 'Món chính') ?>
+                                </span>
+                            </div>
+                            <div style="padding: 1.15rem;">
+                                <div style="display: flex; gap: 0.65rem; font-size: 0.8rem; color: #9a3412; font-weight: 600; margin-bottom: 0.45rem;">
+                                    <span>⏱️ <?= e($fav['cooking_time'] ?? '30p') ?></span>
+                                    <span>•</span>
+                                    <span>❤️ <?= (int)$fav['likes_count'] ?> yêu thích</span>
+                                </div>
+                                <h4 style="font-size: 0.98rem; font-weight: 800; color: #3e1713; margin: 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                    <a href="<?= BASE_URL ?>/views/recipe-detail.php?id=<?= (int)$fav['id'] ?>" style="color: inherit; text-decoration: none;">
+                                       <?= e($fav['title']) ?>
+                                    </a>
+                                </h4>
+                            </div>
+                        </div>
+                        <div style="padding: 0 1.15rem 1.15rem;">
+                            <a href="<?= BASE_URL ?>/views/recipe-detail.php?id=<?= (int)$fav['id'] ?>" style="display: block; text-align: center; width: 100%; padding: 0.55rem; border-radius: 9999px; background: #fff7ed; border: 1.5px solid #fed7aa; color: #ea580c; font-size: 0.88rem; font-weight: 700; text-decoration: none; transition: all 0.2s;" onmouseover="this.style.background='#ea580c'; this.style.color='#ffffff';" onmouseout="this.style.background='#fff7ed'; this.style.color='#ea580c';">
+                                Vào bếp nấu ngay &rarr;
+                            </a>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php else: ?>
+            <div style="text-align: center; padding: 2.5rem 1.5rem; background: #fffaf5; border: 1.5px dashed #fed7aa; border-radius: 18px;">
+                <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🍳</div>
+                <h3 style="font-size: 1.15rem; font-weight: 800; color: #3e1713; margin: 0 0 0.5rem;">
+                    Bạn chưa lưu món ăn yêu thích nào
+                </h3>
+                <p style="color: #64748b; font-size: 0.92rem; max-width: 480px; margin: 0 auto 1.5rem; line-height: 1.5;">
+                    Ghé thăm Kho Món Ăn Cookio với hơn 30+ công thức thơm ngon được chia sẻ bởi cộng đồng để thả tim và lưu vào danh sách của bạn!
+                </p>
+                <a href="<?= BASE_URL ?>/index.php" style="display: inline-block; padding: 0.65rem 1.75rem; border-radius: 9999px; font-weight: 700; font-size: 0.92rem; text-decoration: none; background: #ea580c; color: #ffffff; box-shadow: 0 4px 14px rgba(234, 88, 12, 0.25);">
+                    Khám Phá Kho Món Ăn Ngay &rarr;
+                </a>
+            </div>
+        <?php endif; ?>
     </div>
 
     <!-- Danh sách đầu bếp đang theo dõi -->
