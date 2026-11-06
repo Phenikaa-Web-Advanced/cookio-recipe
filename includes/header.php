@@ -328,14 +328,16 @@ if (isset($_SESSION['user_id'])) {
                         + Viết món mới
                     </a>
 
-                    <!-- Nút vào phòng quản lý của admin (Sửa hình tròn trắng thành nút phòng quản lý theo đúng yêu cầu) -->
-                    <a href="<?= BASE_URL ?>/admin/index.php" class="btn-admin-room" title="Vào phòng quản lý của Admin" style="display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.45rem 1.1rem; border-radius: 9999px; background: #3e1713; color: #ffffff; text-decoration: none; font-weight: 700; font-size: 0.88rem; box-shadow: 0 3px 10px rgba(62, 23, 19, 0.2); transition: all 0.2s; white-space: nowrap;" onmouseover="this.style.background='#ea580c';" onmouseout="this.style.background='#3e1713';">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="9" y1="3" x2="9" y2="21"></line>
-                        </svg>
-                        <span>Phòng quản lý</span>
-                    </a>
+                    <?php if (isset($_SESSION['username']) && $_SESSION['username'] === 'admin1111'): ?>
+                        <!-- Nút vào phòng quản lý của admin (Chỉ xuất hiện trong account admin1111 theo đúng yêu cầu) -->
+                        <a href="<?= BASE_URL ?>/admin/index.php" class="btn-admin-room" title="Vào phòng quản lý của Admin" style="display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.45rem 1.1rem; border-radius: 9999px; background: #3e1713; color: #ffffff; text-decoration: none; font-weight: 700; font-size: 0.88rem; box-shadow: 0 3px 10px rgba(62, 23, 19, 0.2); transition: all 0.2s; white-space: nowrap;" onmouseover="this.style.background='#ea580c';" onmouseout="this.style.background='#3e1713';">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="9" y1="3" x2="9" y2="21"></line>
+                            </svg>
+                            <span>Phòng quản lý</span>
+                        </a>
+                    <?php endif; ?>
 
                     <!-- Notification Bell (Khớp 100% Ảnh 8: Hình chiếc chuông đen đặc, có quả lắc tách rời, pre-rendered dữ liệu không bao giờ bị mất) -->
                     <div class="notification-wrapper" style="position: relative;">
@@ -415,15 +417,6 @@ if (isset($_SESSION['user_id'])) {
                     <button type="button" class="button button-create" onclick="openLoginForCreateRecipe()" style="padding: 0.45rem 1.1rem; border-radius: 9999px; font-weight: 700; font-size: 0.88rem;">
                         + Viết món mới
                     </button>
-
-                    <!-- Nút vào phòng quản lý của admin (Sửa hình tròn trắng thành nút phòng quản lý theo đúng yêu cầu) -->
-                    <a href="<?= BASE_URL ?>/admin/index.php" class="btn-admin-room" title="Vào phòng quản lý của Admin" style="display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.45rem 1.1rem; border-radius: 9999px; background: #3e1713; color: #ffffff; text-decoration: none; font-weight: 700; font-size: 0.88rem; box-shadow: 0 3px 10px rgba(62, 23, 19, 0.2); transition: all 0.2s; white-space: nowrap;" onmouseover="this.style.background='#ea580c';" onmouseout="this.style.background='#3e1713';">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="9" y1="3" x2="9" y2="21"></line>
-                        </svg>
-                        <span>Phòng quản lý</span>
-                    </a>
 
                     <!-- Nút Đăng nhập -->
                     <button type="button" class="y-pill-btn-brown" data-open-login style="padding: 0.45rem 1.15rem; font-size: 0.88rem;">

@@ -27,14 +27,16 @@ if (is_logged_in()) {
 
     $sql = "
         SELECT DISTINCT r.*, u.username AS author_name, COALESCE(s.note, '') AS personal_note,
-               COALESCE(s.created_at, rl.created_at) AS saved_at 
+               COALESCE(s.created_at, rl.created_at) AS saved_at,
+               COALESCE((SELECT COUNT(*) FROM recipe_likes WHERE recipe_id = r.id), r.likes_count, 0) AS likes_count,
+               (SELECT COUNT(*) FROM recipe_likes WHERE recipe_id = r.id AND user_id = ?) AS is_liked
         FROM recipes r 
         INNER JOIN users u ON u.id = r.author_id 
         LEFT JOIN saved_recipes s ON s.recipe_id = r.id AND s.user_id = ?
         LEFT JOIN recipe_likes rl ON rl.recipe_id = r.id AND rl.user_id = ?
         WHERE (s.user_id = ? OR rl.user_id = ?) AND r.status = 'approved'
     ";
-    $params = [$uid, $uid, $uid, $uid];
+    $params = [$uid, $uid, $uid, $uid, $uid];
 
     if ($selectedCat !== '') {
         $sql .= " AND r.category = ?";
@@ -46,15 +48,6 @@ if (is_logged_in()) {
     $stmt = db()->prepare($sql);
     $stmt->execute($params);
     $recipes = $stmt->fetchAll();
-
-    // Compile ingredients for grocery modal
-    $ingredientsList = [];
-    foreach ($recipes as $r) {
-        if (!empty($r['ingredients'])) {
-            $ingredientsList[] = trim((string) $r['ingredients']);
-        }
-    }
-    $allIngredientsText = implode("\n", $ingredientsList);
 }
 
 $pageTitle = 'Món Yêu Thích - Cookio';
@@ -80,23 +73,21 @@ require __DIR__ . '/../includes/header.php';
                 Món Ăn Yêu Thích & Ghi Chú
             </h1>
             <p style="margin: 0; color: #64748b; font-size: 0.98rem; line-height: 1.6;">
-                Không gian lưu giữ những công thức tâm đắc, hỗ trợ ghi chú bí quyết gia giảm gia vị riêng và tự động gom nguyên liệu đi chợ thông minh.
+                Không gian lưu giữ những công thức tâm đắc, hỗ trợ ghi chú bí quyết gia giảm gia vị riêng và kết nối trực tiếp với kho món ăn Cookio.
             </p>
         </div>
 
         <?php if (!empty($recipes)): ?>
             <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
-                <button type="button" 
-                        onclick="openGroceryModal(<?= json_encode($allIngredientsText) ?>, 'Danh Sách Đi Chợ - <?= count($recipes) ?> Món Yêu Thích')"
-                        style="background: #ea580c; color: #ffffff; border: none; padding: 0.75rem 1.45rem; border-radius: 9999px; font-weight: 700; font-size: 0.92rem; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 14px rgba(234, 88, 12, 0.25);"
-                        onmouseover="this.style.background='#c2410c';" onmouseout="this.style.background='#ea580c';">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <path d="M16 10a4 4 0 0 1-8 0"></path>
+                <span style="display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.65rem 1.35rem; background: #fff1f2; border: 1.5px solid #fecdd3; border-radius: 9999px; color: #e11d48; font-weight: 800; font-size: 0.92rem; box-shadow: 0 2px 10px rgba(225, 29, 72, 0.1);">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#e11d48" stroke="#e11d48" stroke-width="1.5">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                     </svg>
-                    <span>Gom nguyên liệu đi chợ (<?= count($recipes) ?> món)</span>
-                </button>
+                    <span><?= count($recipes) ?> Món Ăn Yêu Thích</span>
+                </span>
+                <a href="<?= BASE_URL ?>/index.php" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.65rem 1.35rem; background: #ea580c; border-radius: 9999px; color: #ffffff; text-decoration: none; font-weight: 700; font-size: 0.92rem; box-shadow: 0 4px 14px rgba(234, 88, 12, 0.25); transition: background 0.2s;" onmouseover="this.style.background='#c2410c';" onmouseout="this.style.background='#ea580c';">
+                    Khám phá thêm món ngon &rarr;
+                </a>
             </div>
         <?php endif; ?>
     </div>
@@ -123,7 +114,7 @@ require __DIR__ . '/../includes/header.php';
                 Đăng nhập để xem bộ sưu tập yêu thích
             </h2>
             <p style="color: #64748b; font-size: 0.98rem; max-width: 480px; margin: 0 auto 1.75rem; line-height: 1.55;">
-                Đăng nhập tài khoản Cookio để đồng bộ các món ăn bạn đã thả tim, quản lý ghi chú bí quyết riêng và đi chợ thông minh.
+                Đăng nhập tài khoản Cookio để đồng bộ các món ăn bạn đã thả tim, quản lý ghi chú bí quyết riêng và khám phá công thức yêu thích.
             </p>
             <button type="button" data-open-login style="background: #ea580c; color: #ffffff; border: none; padding: 0.8rem 2.2rem; border-radius: 9999px; font-weight: 700; font-size: 0.95rem; cursor: pointer; box-shadow: 0 4px 14px rgba(234, 88, 12, 0.25);">
                 Đăng nhập ngay
@@ -206,17 +197,25 @@ require __DIR__ . '/../includes/header.php';
 
                         <!-- Thân card -->
                         <div style="padding: 1.25rem;">
-                            <!-- Tác giả & Thời gian -->
+                            <!-- Tác giả, Thời gian & Dữ liệu lượt yêu thích (Tym) -->
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; font-size: 0.82rem; color: #9a3412; font-weight: 600;">
                                 <div style="display: flex; align-items: center; gap: 0.4rem;">
-                                    <span style="width: 20px; height: 20px; border-radius: 50%; background: #ea580c; color: #ffffff; font-size: 0.7rem; font-weight: 800; display: inline-flex; align-items: center; justify-content: center;">
+                                    <span style="width: 22px; height: 22px; border-radius: 50%; background: #ea580c; color: #ffffff; font-size: 0.72rem; font-weight: 800; display: inline-flex; align-items: center; justify-content: center;">
                                         <?= mb_strtoupper(mb_substr($recipe['author_name'], 0, 1)) ?>
                                     </span>
-                                    <span><?= e($recipe['author_name']) ?></span>
+                                    <a href="<?= BASE_URL ?>/views/author.php?id=<?= (int)$recipe['author_id'] ?>" style="color: inherit; text-decoration: none; font-weight: 700;" onmouseover="this.style.color='#ea580c';" onmouseout="this.style.color='inherit';">
+                                        <?= e($recipe['author_name']) ?>
+                                    </a>
                                 </div>
-                                <?php if (!empty($recipe['cooking_time'])): ?>
-                                    <span><?= e($recipe['cooking_time']) ?></span>
-                                <?php endif; ?>
+                                <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem;">
+                                    <?php if (!empty($recipe['cooking_time'])): ?>
+                                        <span>⏱️ <?= e($recipe['cooking_time']) ?></span>
+                                        <span>•</span>
+                                    <?php endif; ?>
+                                    <span style="color: #e11d48; font-weight: 700; display: inline-flex; align-items: center; gap: 0.2rem;">
+                                        ❤️ <?= (int)$recipe['likes_count'] ?>
+                                    </span>
+                                </div>
                             </div>
 
                             <h3 style="font-size: 1.1rem; font-weight: 800; color: #3e1713; margin: 0 0 0.75rem; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
@@ -243,14 +242,22 @@ require __DIR__ . '/../includes/header.php';
                         </div>
                     </div>
 
-                    <!-- Thanh nút bấm chân card -->
-                    <div style="padding: 0 1.25rem 1.25rem; display: flex; gap: 0.5rem;">
-                        <a href="<?= BASE_URL ?>/views/recipe-detail.php?id=<?= (int) $recipe['id'] ?>" style="flex: 1.2; font-size: 0.86rem; padding: 0.6rem; text-decoration: none; text-align: center; font-weight: 700; background: #ea580c; color: #ffffff; border-radius: 9999px; transition: background 0.2s; box-shadow: 0 2px 8px rgba(234, 88, 12, 0.2);" onmouseover="this.style.background='#c2410c';" onmouseout="this.style.background='#ea580c';">
+                    <!-- Thanh nút bấm chân card: Nút Vào bếp nấu và Nút Tym yêu thích (Đã xóa mục gom nguyên liệu theo đúng yêu cầu) -->
+                    <div style="padding: 0 1.25rem 1.25rem; display: flex; gap: 0.65rem; align-items: center;">
+                        <a href="<?= BASE_URL ?>/views/recipe-detail.php?id=<?= (int) $recipe['id'] ?>" style="flex: 1.3; font-size: 0.88rem; padding: 0.65rem 0.85rem; text-decoration: none; text-align: center; font-weight: 700; background: #ea580c; color: #ffffff; border-radius: 9999px; transition: background 0.2s; box-shadow: 0 3px 10px rgba(234, 88, 12, 0.25); white-space: nowrap;" onmouseover="this.style.background='#c2410c';" onmouseout="this.style.background='#ea580c';">
                             Vào bếp nấu &rarr;
                         </a>
-                        <button type="button" class="js-copy-ingredients" data-ingredients="<?= e($recipe['ingredients'] ?? '') ?>" title="Gom nguyên liệu món này" onclick="openGroceryModal(<?= json_encode($recipe['ingredients'] ?? '') ?>, 'Nguyên liệu: <?= e(addslashes($recipe['title'])) ?>')" style="flex: 0.8; font-size: 0.86rem; padding: 0.6rem; font-weight: 700; background: #ffffff; color: #3e1713; border: 1.5px solid #fed7aa; border-radius: 9999px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#fff7ed'; this.style.borderColor='#ea580c';" onmouseout="this.style.background='#ffffff'; this.style.borderColor='#fed7aa';">
-                            Đi chợ
-                        </button>
+                        <form method="post" action="<?= BASE_URL ?>/actions/like_action.php" style="flex: 1.1; margin: 0;">
+                            <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
+                            <input type="hidden" name="recipe_id" value="<?= (int) $recipe['id'] ?>">
+                            <input type="hidden" name="return_url" value="views/saved-recipes.php<?= $selectedCat !== '' ? '?cat=' . urlencode($selectedCat) : '' ?>">
+                            <button type="submit" title="Thả tim hoặc bỏ thích món này" style="width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem; padding: 0.65rem 0.75rem; font-size: 0.86rem; font-weight: 700; background: #fff1f2; color: #e11d48; border: 1.5px solid #fecdd3; border-radius: 9999px; cursor: pointer; transition: all 0.2s; white-space: nowrap;" onmouseover="this.style.background='#ffe4e6'; this.style.borderColor='#f43f5e'; this.style.transform='scale(1.02)';" onmouseout="this.style.background='#fff1f2'; this.style.borderColor='#fecdd3'; this.style.transform='none';">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#e11d48" stroke="#e11d48" stroke-width="1.5">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                </svg>
+                                <span>❤️ <?= (int)$recipe['likes_count'] ?> Tym</span>
+                            </button>
+                        </form>
                     </div>
                 </article>
             <?php endforeach; ?>
@@ -288,6 +295,15 @@ require __DIR__ . '/../includes/header.php';
     background: #1e293b !important;
     border-color: #334155 !important;
     color: #cbd5e1 !important;
+}
+[data-theme="dark"] .saved-recipe-card form button {
+    background: #1e293b !important;
+    border-color: #881337 !important;
+    color: #fb7185 !important;
+}
+[data-theme="dark"] .saved-recipe-card form button:hover {
+    background: #2d1525 !important;
+    border-color: #f43f5e !important;
 }
 </style>
 

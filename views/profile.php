@@ -198,7 +198,7 @@ $showEditByDefault = isset($_GET['edit']) && $_GET['edit'] === '1';
                 <div class="cookio-stat-label">Điểm đánh giá</div>
             </div>
 
-            <!-- 7. Món yêu thích (Liên kết trực tiếp tới trang Món yêu thích & Đi chợ) -->
+            <!-- 7. Món yêu thích (Liên kết trực tiếp tới trang Món yêu thích) -->
             <a href="<?= BASE_URL ?>/views/saved-recipes.php" class="cookio-stat-item" style="text-decoration: none; color: inherit; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
                 <div class="cookio-stat-value" style="color: #ec4899;"><?= $savedRecipes ?></div>
                 <div class="cookio-stat-label">Món yêu thích &rarr;</div>
@@ -311,7 +311,7 @@ $showEditByDefault = isset($_GET['edit']) && $_GET['edit'] === '1';
             </div>
             <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
                 <a href="<?= BASE_URL ?>/views/saved-recipes.php" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1.15rem; background: #fff7ed; border: 1.5px solid #fed7aa; border-radius: 9999px; color: #ea580c; text-decoration: none; font-weight: 700; font-size: 0.88rem; transition: all 0.2s;">
-                    📑 Quản lý & Đi chợ
+                    ❤️ Quản lý bộ sưu tập yêu thích &rarr;
                 </a>
                 <a href="<?= BASE_URL ?>/index.php" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1.25rem; background: #ea580c; border: 1.5px solid #ea580c; border-radius: 9999px; color: #ffffff; text-decoration: none; font-weight: 700; font-size: 0.88rem; box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25); transition: all 0.2s;">
                     🍳 Khám Phá Kho Món Ăn Cookio &rarr;
