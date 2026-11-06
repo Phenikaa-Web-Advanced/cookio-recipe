@@ -308,7 +308,7 @@ if (isset($_SESSION['user_id'])) {
             </nav>
 
             <!-- Right Action Buttons: Viết món mới & Nút vào phòng quản lý & Notification Bell & Auth -->
-            <div class="yummy-nav-actions" style="display: flex; align-items: center; gap: 0.65rem;">
+            <div class="yummy-nav-actions" style="display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; margin-left: auto;">
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <?php
                     $headerUserId = (int) $_SESSION['user_id'];
@@ -324,14 +324,14 @@ if (isset($_SESSION['user_id'])) {
                     $stmtHN->execute([$headerUserId]);
                     $headerNotifs = $stmtHN->fetchAll();
                     ?>
-                    <a href="<?= BASE_URL ?>/views/create-recipe.php" class="button button-create" style="padding: 0.45rem 1.1rem; border-radius: 9999px; font-weight: 700; font-size: 0.88rem;">
+                    <a href="<?= BASE_URL ?>/views/create-recipe.php" class="button button-create" style="padding: 0.4rem 0.95rem; border-radius: 9999px; font-weight: 700; font-size: 0.85rem; white-space: nowrap;">
                         + Viết món mới
                     </a>
 
                     <?php if (isset($_SESSION['username']) && $_SESSION['username'] === 'admin1111'): ?>
                         <!-- Nút vào phòng quản lý của admin (Chỉ xuất hiện trong account admin1111 theo đúng yêu cầu) -->
-                        <a href="<?= BASE_URL ?>/admin/index.php" class="btn-admin-room" title="Vào phòng quản lý của Admin" style="display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.45rem 1.1rem; border-radius: 9999px; background: #3e1713; color: #ffffff; text-decoration: none; font-weight: 700; font-size: 0.88rem; box-shadow: 0 3px 10px rgba(62, 23, 19, 0.2); transition: all 0.2s; white-space: nowrap;" onmouseover="this.style.background='#ea580c';" onmouseout="this.style.background='#3e1713';">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                        <a href="<?= BASE_URL ?>/admin/index.php" class="btn-admin-room" title="Vào phòng quản lý của Admin" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.95rem; border-radius: 9999px; background: #3e1713; color: #ffffff; text-decoration: none; font-weight: 700; font-size: 0.85rem; box-shadow: 0 3px 10px rgba(62, 23, 19, 0.2); transition: all 0.2s; white-space: nowrap;" onmouseover="this.style.background='#ea580c';" onmouseout="this.style.background='#3e1713';">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                                 <line x1="9" y1="3" x2="9" y2="21"></line>
                             </svg>
@@ -339,10 +339,10 @@ if (isset($_SESSION['user_id'])) {
                         </a>
                     <?php endif; ?>
 
-                    <!-- Notification Bell (Khớp 100% Ảnh 8: Hình chiếc chuông đen đặc, có quả lắc tách rời, pre-rendered dữ liệu không bao giờ bị mất) -->
+                    <!-- Notification Bell (Khớp 100% hình chiếc chuông đen đặc, có quả lắc tách rời, pre-rendered dữ liệu không bao giờ bị mất) -->
                     <div class="notification-wrapper" style="position: relative;">
-                        <button type="button" class="notification-btn" id="btnNotifications" title="Thông báo" aria-label="Thông báo" onclick="toggleNotificationsDropdown(event)" style="width: 42px; height: 42px; border-radius: 50%; background: #ffffff; border: 2px solid #ea580c; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.12); flex-shrink: 0;">
-                            <svg class="cookio-bell-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block; width: 22px; height: 22px; pointer-events: none;">
+                        <button type="button" class="notification-btn" id="btnNotifications" title="Thông báo" aria-label="Thông báo" onclick="toggleNotificationsDropdown(event)" style="width: 38px; height: 38px; border-radius: 50%; background: #ffffff; border: 2px solid #ea580c; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.12); flex-shrink: 0;">
+                            <svg class="cookio-bell-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block; width: 20px; height: 20px; pointer-events: none;">
                                 <circle cx="12" cy="3.5" r="1.5" fill="#3e1713"/>
                                 <path d="M12 4.5C8.96 4.5 6.5 6.96 6.5 10V15.2L4.65 17.05C4.24 17.46 4.53 18.17 5.11 18.17H18.89C19.47 18.17 19.76 17.46 19.35 17.05L17.5 15.2V10C17.5 6.96 15.04 4.5 12 4.5Z" fill="#3e1713"/>
                                 <path d="M9.5 20.2C9.5 21.58 10.62 22.7 12 22.7C13.38 22.7 14.5 21.58 14.5 20.2H9.5Z" fill="#3e1713"/>

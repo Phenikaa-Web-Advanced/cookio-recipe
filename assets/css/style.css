@@ -3375,34 +3375,39 @@ input:focus, textarea:focus, select:focus {
     background: #ffffff;
     border-bottom: 1px solid #f1f5f9;
     padding: 0.55rem 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .yummy-nav-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 0.75rem;
+    width: 100%;
 }
 
 .yummy-main-nav {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
-    flex-wrap: wrap;
+    gap: 0.45rem;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
 }
 
 .y-nav-item {
-    font-size: 0.94rem;
+    font-size: 0.9rem;
     font-weight: 600;
     color: #3e1f17;
     text-decoration: none;
-    padding: 0.35rem 0.85rem;
+    padding: 0.35rem 0.65rem;
     border-radius: 9999px;
     border: 1.5px solid transparent;
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
+    white-space: nowrap !important;
     transition: all 0.2s ease;
 }
 
@@ -3415,8 +3420,17 @@ input:focus, textarea:focus, select:focus {
     background: #ffffff !important;
     color: #3e1f17 !important;
     font-weight: 700 !important;
-    padding: 0.35rem 1.15rem !important;
+    padding: 0.35rem 0.85rem !important;
     box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.yummy-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    margin-left: auto;
+    white-space: nowrap;
 }
 
 .y-dot {
@@ -4621,7 +4635,7 @@ input:focus, textarea:focus, select:focus {
     margin: 0 auto;
     padding: 0 1.5rem;
     display: grid;
-    grid-template-columns: 1.4fr 1fr 1.2fr 1fr;
+    grid-template-columns: 1.4fr 1fr 1.2fr;
     gap: 2.5rem;
 }
 
@@ -5136,12 +5150,18 @@ input:focus, textarea:focus, select:focus {
 }
 
 .notification-btn .cookio-bell-icon,
-.notification-btn svg,
-.notification-btn svg * {
+.notification-btn svg {
     display: block !important;
-    color: #3e1713 !important;
-    fill: #3e1713 !important;
+    width: 20px !important;
+    height: 20px !important;
     transition: all 0.25s ease !important;
+}
+
+.notification-btn .cookio-bell-icon path,
+.notification-btn .cookio-bell-icon circle,
+.notification-btn svg path,
+.notification-btn svg circle {
+    fill: #3e1713 !important;
 }
 
 .notification-btn:hover {
@@ -5395,10 +5415,17 @@ input:focus, textarea:focus, select:focus {
 }
 
 [data-theme="dark"] .notification-btn .cookio-bell-icon,
-[data-theme="dark"] .notification-btn svg,
-[data-theme="dark"] .notification-btn svg * {
-    color: #262626 !important;
-    fill: #262626 !important;
+[data-theme="dark"] .notification-btn svg {
+    display: block !important;
+    width: 20px !important;
+    height: 20px !important;
+}
+
+[data-theme="dark"] .notification-btn .cookio-bell-icon path,
+[data-theme="dark"] .notification-btn .cookio-bell-icon circle,
+[data-theme="dark"] .notification-btn svg path,
+[data-theme="dark"] .notification-btn svg circle {
+    fill: #3e1713 !important;
 }
 
 [data-theme="dark"] .notification-btn:hover {
