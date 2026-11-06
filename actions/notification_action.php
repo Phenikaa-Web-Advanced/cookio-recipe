@@ -34,9 +34,9 @@ if ($action === 'list') {
     }
 
     $stmt = db()->prepare("
-        SELECT n.*, u.username AS actor_name
+        SELECT n.*, COALESCE(u.username, 'Thành viên Cookio') AS actor_name
         FROM notifications n
-        JOIN users u ON u.id = n.actor_id
+        LEFT JOIN users u ON u.id = n.actor_id
         $whereClause
         ORDER BY n.created_at DESC
         LIMIT 30

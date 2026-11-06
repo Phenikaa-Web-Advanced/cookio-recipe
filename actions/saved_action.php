@@ -62,15 +62,36 @@ $stmtCheck = db()->prepare('SELECT id FROM saved_recipes WHERE user_id = ? AND r
 $stmtCheck->execute([$userId, $recipeId]);
 $saved = $stmtCheck->fetch();
 
-if ($saved) {
-    $stmtDelete = db()->prepare('DELETE FROM saved_recipes WHERE id = ?');
-    $stmtDelete->execute([$saved['id']]);
+$stmtCheckL = db()->prepare('SELECT 1 FROM recipe_likes WHERE user_id = ? AND recipe_id = ?');
+$stmtCheckL->execute([$userId, $recipeId]);
+$liked = $stmtCheckL->fetch();
+
+if ($saved || $liked) {
+    // Xóa món khỏi danh sách yêu thích (Đồng bộ xóa cả trong saved_recipes và recipe_likes)
+    $stmtDelete = db()->prepare('DELETE FROM saved_recipes WHERE user_id = ? AND recipe_id = ?');
+    $stmtDelete->execute([$userId, $recipeId]);
+
+    $stmtDeleteL = db()->prepare('DELETE FROM recipe_likes WHERE user_id = ? AND recipe_id = ?');
+    $stmtDeleteL->execute([$userId, $recipeId]);
+
     $statusMsg = 'unsaved';
 } else {
+    // Thêm món vào danh sách yêu thích (Đồng bộ lưu cả vào saved_recipes và recipe_likes)
     $stmtInsert = db()->prepare('INSERT INTO saved_recipes (user_id, recipe_id) VALUES (?, ?)');
     $stmtInsert->execute([$userId, $recipeId]);
+
+    $stmtInsertL = db()->prepare('INSERT INTO recipe_likes (user_id, recipe_id) VALUES (?, ?)');
+    $stmtInsertL->execute([$userId, $recipeId]);
+
     $statusMsg = 'saved';
 }
+
+// Cập nhật lại tổng số likes_count thật cho món ăn
+$countStmt = db()->prepare('SELECT COUNT(*) FROM recipe_likes WHERE recipe_id = ?');
+$countStmt->execute([$recipeId]);
+$newLikesCount = (int) $countStmt->fetchColumn();
+$upStmt = db()->prepare('UPDATE recipes SET likes_count = ? WHERE id = ?');
+$upStmt->execute([$newLikesCount, $recipeId]);
 
 if ($isAjax) {
     header('Content-Type: application/json; charset=utf-8');

@@ -240,14 +240,20 @@ if (isset($_SESSION['user_id'])) {
                 </a>
             </div>
 
-            <!-- Top Search Pill (Đã xóa nút tròn màu nâu theo yêu cầu) -->
+            <!-- Top Search Pill (Khớp 100% Ảnh 1: Thanh tìm kiếm hình viên thuốc, kính lúp bên trái và nút tròn màu nâu bên phải) -->
             <div class="yummy-top-search-wrap">
-                <form method="get" action="<?= BASE_URL ?>/index.php" class="yummy-search-form" id="yummySearchForm" style="padding: 0.45rem 1.25rem;">
-                    <svg class="y-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <form method="get" action="<?= BASE_URL ?>/index.php" class="yummy-search-form" id="yummySearchForm" style="display: flex; align-items: center; background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 9999px; padding: 0.3rem 0.35rem 0.3rem 1.15rem; box-shadow: 0 2px 10px rgba(0,0,0,0.06); width: 100%;">
+                    <svg class="y-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4a1c17" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-right: 0.65rem;">
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
-                    <input type="text" name="q" placeholder="Tìm theo tên món" value="<?= e($_GET['q'] ?? '') ?>" autocomplete="off" style="font-size: 0.95rem; width: 100%;">
+                    <input type="text" name="q" placeholder="Tìm theo tên món" value="<?= e($_GET['q'] ?? '') ?>" autocomplete="off" style="border: none; background: transparent; outline: none; font-size: 0.95rem; color: #1e293b; width: 100%; font-weight: 500;">
+                    <button type="submit" class="btn-yummy-search-go" title="Tìm kiếm" aria-label="Tìm kiếm" style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: #4a1c17; border: none; color: #ffffff; cursor: pointer; flex-shrink: 0; margin-left: 0.5rem; transition: all 0.2s; box-shadow: 0 2px 6px rgba(74, 28, 23, 0.35);">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
                 </form>
             </div>
         </div>
@@ -314,9 +320,9 @@ if (isset($_SESSION['user_id'])) {
                     $headerUserId = (int) $_SESSION['user_id'];
                     $headerUnreadCount = (int) db()->query("SELECT COUNT(*) FROM notifications WHERE user_id = $headerUserId AND is_read = 0")->fetchColumn();
                     $stmtHN = db()->prepare("
-                        SELECT n.*, u.username AS actor_name
+                        SELECT n.*, COALESCE(u.username, 'Thành viên Cookio') AS actor_name
                         FROM notifications n
-                        JOIN users u ON u.id = n.actor_id
+                        LEFT JOIN users u ON u.id = n.actor_id
                         WHERE n.user_id = ?
                         ORDER BY n.created_at DESC
                         LIMIT 30
@@ -339,19 +345,18 @@ if (isset($_SESSION['user_id'])) {
                         </a>
                     <?php endif; ?>
 
-                    <!-- Notification Bell (Khớp 100% hình chiếc chuông đen đặc, có quả lắc tách rời, pre-rendered dữ liệu không bao giờ bị mất) -->
+                    <!-- Notification Bell (Khớp 100% Ảnh 3: Hình chiếc chuông đen đặc, có quả lắc, pre-rendered dữ liệu không bao giờ bị mất) -->
                     <div class="notification-wrapper" style="position: relative;">
                         <button type="button" class="notification-btn" id="btnNotifications" title="Thông báo" aria-label="Thông báo" onclick="toggleNotificationsDropdown(event)" style="width: 38px; height: 38px; border-radius: 50%; background: #ffffff; border: 2px solid #ea580c; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.12); flex-shrink: 0;">
-                            <svg class="cookio-bell-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block; width: 20px; height: 20px; pointer-events: none;">
-                                <circle cx="12" cy="3.5" r="1.5" fill="#3e1713"/>
-                                <path d="M12 4.5C8.96 4.5 6.5 6.96 6.5 10V15.2L4.65 17.05C4.24 17.46 4.53 18.17 5.11 18.17H18.89C19.47 18.17 19.76 17.46 19.35 17.05L17.5 15.2V10C17.5 6.96 15.04 4.5 12 4.5Z" fill="#3e1713"/>
-                                <path d="M9.5 20.2C9.5 21.58 10.62 22.7 12 22.7C13.38 22.7 14.5 21.58 14.5 20.2H9.5Z" fill="#3e1713"/>
+                            <svg class="cookio-bell-icon" width="20" height="20" viewBox="0 0 24 24" fill="#3e1713" xmlns="http://www.w3.org/2000/svg" style="display: block !important; width: 20px !important; height: 20px !important; pointer-events: none; fill: #3e1713 !important;">
+                                <path fill="#3e1713" d="M12 2a2 2 0 0 0-2 2c0 .24.04.47.11.68C6.98 5.72 4.5 8.87 4.5 12.65v4.2l-1.85 1.85c-.41.41-.12 1.12.46 1.12h17.78c.58 0 .87-.71.46-1.12L19.5 16.85v-4.2c0-3.78-2.48-6.93-5.61-7.97.07-.21.11-.44.11-.68a2 2 0 0 0-2-2z"/>
+                                <path fill="#3e1713" d="M9.5 21a2.5 2.5 0 0 0 5 0h-5z"/>
                             </svg>
                             <span class="notif-badge" id="notifBadge" style="<?= $headerUnreadCount > 0 ? 'display: flex;' : 'display: none;' ?>">
                                 <?= $headerUnreadCount > 9 ? '9+' : $headerUnreadCount ?>
                             </span>
                         </button>
-                        <div class="notification-dropdown" id="notificationDropdown" style="display: none; position: absolute; top: calc(100% + 12px); right: 0; width: 360px; max-width: 90vw; background: #ffffff; border: 1.5px solid #fed7aa; border-radius: 18px; box-shadow: 0 12px 36px rgba(0,0,0,0.15); z-index: 10000; overflow: hidden;">
+                        <div class="notification-dropdown" id="notificationDropdown" onclick="event.stopPropagation()" style="display: none; position: absolute; top: calc(100% + 12px); right: 0; width: 360px; max-width: calc(100vw - 32px); background: #ffffff; border: 1.5px solid #fed7aa; border-radius: 18px; box-shadow: 0 12px 36px rgba(0,0,0,0.15); z-index: 100000; overflow: hidden;">
                             <div class="notification-header" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.25rem; border-bottom: 1px solid #f1f5f9; background: #fffaf5;">
                                 <span style="font-weight: 800; color: #3e1713; font-size: 0.95rem;">Thông báo của bạn</span>
                                 <button type="button" class="btn-mark-all-read" onclick="markAllNotificationsRead()" style="background: none; border: none; color: #ea580c; font-size: 0.8rem; font-weight: 700; cursor: pointer;">Đã đọc tất cả</button>

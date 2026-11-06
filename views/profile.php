@@ -26,7 +26,13 @@ $user = $stmt->fetch();
 
 $totalRecipes = (int) db()->query("SELECT COUNT(*) FROM recipes WHERE author_id = $userId")->fetchColumn();
 $approvedRecipes = (int) db()->query("SELECT COUNT(*) FROM recipes WHERE author_id = $userId AND status = 'approved'")->fetchColumn();
-$savedRecipes = (int) db()->query("SELECT COUNT(*) FROM saved_recipes WHERE user_id = $userId")->fetchColumn();
+$savedRecipes = (int) db()->query("
+    SELECT COUNT(DISTINCT r.id)
+    FROM recipes r
+    LEFT JOIN saved_recipes sr ON sr.recipe_id = r.id AND sr.user_id = $userId
+    LEFT JOIN recipe_likes rl ON rl.recipe_id = r.id AND rl.user_id = $userId
+    WHERE (sr.user_id = $userId OR rl.user_id = $userId) AND r.status = 'approved'
+")->fetchColumn();
 $totalComments = (int) db()->query("SELECT COUNT(*) FROM comments WHERE user_id = $userId")->fetchColumn();
 
 // Following & Followers count
@@ -73,18 +79,19 @@ $stmtFollowed = db()->prepare("
 $stmtFollowed->execute([$userId]);
 $followedChefs = $stmtFollowed->fetchAll();
 
-// Danh sách món yêu thích của tài khoản này từ bảng saved_recipes (Liên kết với Kho món ăn)
+// Danh sách món yêu thích của tài khoản này từ bảng saved_recipes và recipe_likes (Liên kết với Kho món ăn)
 $stmtFavs = db()->prepare("
-    SELECT r.*, u.username AS author_name,
+    SELECT DISTINCT r.*, u.username AS author_name,
            (SELECT COUNT(*) FROM recipe_likes WHERE recipe_id = r.id) AS likes_count
-    FROM saved_recipes sr
-    JOIN recipes r ON r.id = sr.recipe_id
+    FROM recipes r
     JOIN users u ON u.id = r.author_id
-    WHERE sr.user_id = ?
-    ORDER BY sr.created_at DESC
+    LEFT JOIN saved_recipes sr ON sr.recipe_id = r.id AND sr.user_id = ?
+    LEFT JOIN recipe_likes rl ON rl.recipe_id = r.id AND rl.user_id = ?
+    WHERE (sr.user_id = ? OR rl.user_id = ?) AND r.status = 'approved'
+    ORDER BY r.id DESC
     LIMIT 6
 ");
-$stmtFavs->execute([$userId]);
+$stmtFavs->execute([$userId, $userId, $userId, $userId]);
 $favoriteRecipes = $stmtFavs->fetchAll();
 
 $showEditByDefault = isset($_GET['edit']) && $_GET['edit'] === '1';

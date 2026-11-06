@@ -9,6 +9,8 @@ $recipes = [];
 $categories = [];
 $allIngredientsText = '';
 $selectedCat = trim((string) ($_GET['cat'] ?? ''));
+$allSystemRecipes = [];
+$favoriteIds = [];
 
 if (is_logged_in()) {
     $uid = (int) $_SESSION['user_id'];
@@ -48,6 +50,14 @@ if (is_logged_in()) {
     $stmt = db()->prepare($sql);
     $stmt->execute($params);
     $recipes = $stmt->fetchAll();
+
+    $favoriteIds = array_map(fn($r) => (int)$r['id'], $recipes);
+    $allSystemRecipes = db()->query("
+        SELECT id, title, category, image_url, cooking_time 
+        FROM recipes 
+        WHERE status = 'approved' 
+        ORDER BY title ASC
+    ")->fetchAll();
 }
 
 $pageTitle = 'Món Yêu Thích - Cookio';
@@ -77,16 +87,19 @@ require __DIR__ . '/../includes/header.php';
             </p>
         </div>
 
-        <?php if (!empty($recipes)): ?>
+        <?php if (is_logged_in()): ?>
             <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
                 <span style="display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.65rem 1.35rem; background: #fff1f2; border: 1.5px solid #fecdd3; border-radius: 9999px; color: #e11d48; font-weight: 800; font-size: 0.92rem; box-shadow: 0 2px 10px rgba(225, 29, 72, 0.1);">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="#e11d48" stroke="#e11d48" stroke-width="1.5">
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                     </svg>
-                    <span><?= count($recipes) ?> Món Ăn Yêu Thích</span>
+                    <span><?= count($recipes) ?> Món Yêu Thích</span>
                 </span>
-                <a href="<?= BASE_URL ?>/index.php" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.65rem 1.35rem; background: #ea580c; border-radius: 9999px; color: #ffffff; text-decoration: none; font-weight: 700; font-size: 0.92rem; box-shadow: 0 4px 14px rgba(234, 88, 12, 0.25); transition: background 0.2s;" onmouseover="this.style.background='#c2410c';" onmouseout="this.style.background='#ea580c';">
-                    Khám phá thêm món ngon &rarr;
+                <button type="button" onclick="document.getElementById('modalAddFavorite').style.display='flex'" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.65rem 1.35rem; background: #ea580c; border: none; border-radius: 9999px; color: #ffffff; font-weight: 700; font-size: 0.92rem; cursor: pointer; box-shadow: 0 4px 14px rgba(234, 88, 12, 0.25); transition: background 0.2s;" onmouseover="this.style.background='#c2410c';" onmouseout="this.style.background='#ea580c';">
+                    + Thêm món vào yêu thích
+                </button>
+                <a href="<?= BASE_URL ?>/index.php" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.65rem 1.35rem; background: #fffaf5; border: 1.5px solid #fed7aa; border-radius: 9999px; color: #ea580c; text-decoration: none; font-weight: 700; font-size: 0.92rem; transition: all 0.2s;" onmouseover="this.style.background='#fff7ed';" onmouseout="this.style.background='#fffaf5';">
+                    Khám phá thêm &rarr;
                 </a>
             </div>
         <?php endif; ?>
@@ -95,7 +108,8 @@ require __DIR__ . '/../includes/header.php';
     <?php if (isset($_GET['bookmark'])): ?>
         <div class="notice success" style="background: #ecfdf5; border: 1.5px solid #a7f3d0; color: #065f46; border-radius: 14px; padding: 0.85rem 1.25rem; font-weight: 600; margin-bottom: 1.75rem;">
             <?= match ($_GET['bookmark']) {
-                'unsaved' => 'Đã gỡ món khỏi danh sách yêu thích.',
+                'saved' => 'Đã thêm món vào danh sách yêu thích thành công! ❤️',
+                'unsaved' => 'Đã xóa món khỏi danh sách yêu thích thành công.',
                 'note_saved' => 'Đã lưu ghi chú nhà bếp thành công.',
                 default => 'Đã cập nhật danh sách món yêu thích.'
             } ?>
@@ -184,8 +198,8 @@ require __DIR__ . '/../includes/header.php';
                                 <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
                                 <input type="hidden" name="recipe_id" value="<?= (int) $recipe['id'] ?>">
                                 <input type="hidden" name="return_url" value="views/saved-recipes.php<?= $selectedCat !== '' ? '?cat=' . urlencode($selectedCat) : '' ?>">
-                                <button type="submit" title="Bỏ lưu món này"
-                                    onclick="return confirm('Bỏ lưu món «<?= e(addslashes($recipe['title'])) ?>» khỏi bộ sưu tập yêu thích?')"
+                                <button type="submit" title="Xóa món này khỏi yêu thích"
+                                    onclick="return confirm('Xóa món «<?= e(addslashes($recipe['title'])) ?>» khỏi bộ sưu tập yêu thích?')"
                                     style="width: 36px; height: 36px; border-radius: 50%; background: #ffffff; border: 1.5px solid #fed7aa; display: flex; align-items: center; justify-content: center; font-size: 1.15rem; line-height: 1; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.12); transition: all 0.2s;"
                                     onmouseover="this.style.transform='scale(1.1)';" onmouseout="this.style.transform='scale(1)';">
                                     ❤️
@@ -304,6 +318,65 @@ require __DIR__ . '/../includes/header.php';
     border-color: #f43f5e !important;
 }
 </style>
+
+<!-- Modal thêm món ăn vào mục yêu thích -->
+<div id="modalAddFavorite" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 999999; align-items: center; justify-content: center; padding: 1.5rem;" onclick="if(event.target===this) this.style.display='none'">
+    <div style="background: #ffffff; border-radius: 24px; max-width: 600px; width: 100%; max-height: 85vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.2); border: 1.5px solid #fed7aa;" onclick="event.stopPropagation()">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.75rem; border-bottom: 1.5px solid #ffedd5; background: #fffaf5;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.35rem;">❤️</span>
+                <h3 style="margin: 0; font-size: 1.2rem; font-weight: 800; color: #3e1713;">Thêm Món Vào Mục Yêu Thích</h3>
+            </div>
+            <button type="button" onclick="document.getElementById('modalAddFavorite').style.display='none'" style="background: none; border: none; font-size: 1.5rem; line-height: 1; cursor: pointer; color: #64748b;">&times;</button>
+        </div>
+        <div style="padding: 1rem 1.75rem; border-bottom: 1px solid #f1f5f9; background: #ffffff;">
+            <input type="text" id="favSearchInput" placeholder="Tìm kiếm món ăn cần thêm (vd: bò, gà, sườn...)..." oninput="filterFavModalList(this.value)" style="width: 100%; padding: 0.65rem 1.2rem; border-radius: 9999px; border: 1.5px solid #fed7aa; font-size: 0.92rem; outline: none; background: #fffaf5;">
+        </div>
+        <div id="favModalList" style="flex: 1; overflow-y: auto; padding: 1rem 1.75rem; display: flex; flex-direction: column; gap: 0.75rem; max-height: 50vh;">
+            <?php if (!empty($allSystemRecipes)): ?>
+                <?php foreach ($allSystemRecipes as $sysR): ?>
+                    <?php 
+                    $isFav = in_array((int)$sysR['id'], $favoriteIds, true);
+                    $sysImg = !empty($sysR['image_url']) ? BASE_URL . '/' . e($sysR['image_url']) : BASE_URL . '/assets/images/default-recipe.jpg';
+                    ?>
+                    <div class="fav-modal-item" data-title="<?= e(mb_strtolower($sysR['title'])) ?>" style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.65rem 0.85rem; border: 1px solid #ffedd5; border-radius: 14px; background: #ffffff;">
+                        <div style="display: flex; align-items: center; gap: 0.85rem; flex: 1; min-width: 0;">
+                            <img src="<?= $sysImg ?>" alt="<?= e($sysR['title']) ?>" style="width: 48px; height: 48px; border-radius: 10px; object-fit: cover; flex-shrink: 0;" loading="lazy">
+                            <div style="min-width: 0;">
+                                <div style="font-weight: 700; color: #1e293b; font-size: 0.92rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?= e($sysR['title']) ?></div>
+                                <div style="font-size: 0.78rem; color: #94a3b8;"><?= e($sysR['category'] ?? 'Món ngon') ?> • <?= e($sysR['cooking_time'] ?? '30p') ?></div>
+                            </div>
+                        </div>
+                        <form method="post" action="<?= BASE_URL ?>/actions/saved_action.php" style="margin: 0; flex-shrink: 0;">
+                            <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
+                            <input type="hidden" name="recipe_id" value="<?= (int)$sysR['id'] ?>">
+                            <input type="hidden" name="return_url" value="views/saved-recipes.php">
+                            <?php if ($isFav): ?>
+                                <button type="submit" title="Bấm để xóa khỏi yêu thích" style="padding: 0.4rem 0.85rem; border-radius: 9999px; background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3; font-size: 0.82rem; font-weight: 700; cursor: pointer; white-space: nowrap;">
+                                    ❤️ Đã lưu (Xóa)
+                                </button>
+                            <?php else: ?>
+                                <button type="submit" title="Bấm để thêm vào yêu thích" style="padding: 0.4rem 0.85rem; border-radius: 9999px; background: #ea580c; color: #ffffff; border: none; font-size: 0.82rem; font-weight: 700; cursor: pointer; white-space: nowrap;">
+                                    + Thêm món
+                                </button>
+                            <?php endif; ?>
+                        </form>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+
+<script>
+function filterFavModalList(val) {
+    const q = val.trim().toLowerCase();
+    document.querySelectorAll('#favModalList .fav-modal-item').forEach(el => {
+        const title = el.getAttribute('data-title') || '';
+        el.style.display = (q === '' || title.includes(q)) ? 'flex' : 'none';
+    });
+}
+</script>
 
 <?php
 require __DIR__ . '/../includes/modal-login.php';
