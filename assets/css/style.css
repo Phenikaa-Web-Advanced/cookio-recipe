@@ -5079,20 +5079,7 @@ input:focus, textarea:focus, select:focus {
 }
 
 .btn-yummy-search-go {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 36px !important;
-    height: 36px !important;
-    border-radius: 50% !important;
-    background: #4a1c17 !important;
-    border: none !important;
-    color: #ffffff !important;
-    cursor: pointer !important;
-    flex-shrink: 0 !important;
-    margin-left: 0.35rem !important;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    box-shadow: 0 2px 6px rgba(74, 28, 23, 0.35) !important;
+    display: none !important;
 }
 
 .btn-yummy-search-go:hover {
@@ -5149,11 +5136,13 @@ input:focus, textarea:focus, select:focus {
     color: #262626 !important;
 }
 
+.notification-btn img,
 .notification-btn .cookio-bell-icon,
 .notification-btn svg {
     display: block !important;
     width: 20px !important;
     height: 20px !important;
+    object-fit: contain !important;
     transition: all 0.25s ease !important;
 }
 
@@ -5171,6 +5160,7 @@ input:focus, textarea:focus, select:focus {
     box-shadow: 0 4px 16px rgba(234, 88, 12, 0.28) !important;
 }
 
+.notification-btn:hover img,
 .notification-btn:hover .cookio-bell-icon,
 .notification-btn:hover svg {
     color: #ea580c !important;
@@ -5401,9 +5391,7 @@ input:focus, textarea:focus, select:focus {
 }
 
 [data-theme="dark"] .btn-yummy-search-go {
-    background: #4a1c17 !important;
-    color: #ffffff !important;
-    box-shadow: 0 2px 8px rgba(74, 28, 23, 0.5) !important;
+    display: none !important;
 }
 
 /* 2. Notification Bell in Dark Mode (High Contrast White Circle with Solid Dark Bell Icon Image 3) */
@@ -5414,11 +5402,13 @@ input:focus, textarea:focus, select:focus {
     color: #262626 !important;
 }
 
+[data-theme="dark"] .notification-btn img,
 [data-theme="dark"] .notification-btn .cookio-bell-icon,
 [data-theme="dark"] .notification-btn svg {
     display: block !important;
     width: 20px !important;
     height: 20px !important;
+    object-fit: contain !important;
 }
 
 [data-theme="dark"] .notification-btn .cookio-bell-icon path,
@@ -5434,10 +5424,12 @@ input:focus, textarea:focus, select:focus {
     box-shadow: 0 0 22px rgba(234, 88, 12, 0.75) !important;
 }
 
+[data-theme="dark"] .notification-btn:hover img,
 [data-theme="dark"] .notification-btn:hover .cookio-bell-icon,
 [data-theme="dark"] .notification-btn:hover svg {
     color: #ea580c !important;
     fill: #ea580c !important;
+    transform: rotate(12deg) scale(1.06);
 }
 
 [data-theme="dark"] .notif-badge {

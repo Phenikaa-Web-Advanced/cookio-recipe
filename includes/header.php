@@ -240,20 +240,14 @@ if (isset($_SESSION['user_id'])) {
                 </a>
             </div>
 
-            <!-- Top Search Pill (Khớp 100% Ảnh 1: Thanh tìm kiếm hình viên thuốc, kính lúp bên trái và nút tròn màu nâu bên phải) -->
+            <!-- Top Search Pill (Đã xóa nút tròn màu nâu theo đúng yêu cầu) -->
             <div class="yummy-top-search-wrap">
-                <form method="get" action="<?= BASE_URL ?>/index.php" class="yummy-search-form" id="yummySearchForm" style="display: flex; align-items: center; background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 9999px; padding: 0.3rem 0.35rem 0.3rem 1.15rem; box-shadow: 0 2px 10px rgba(0,0,0,0.06); width: 100%;">
-                    <svg class="y-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4a1c17" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-right: 0.65rem;">
+                <form method="get" action="<?= BASE_URL ?>/index.php" class="yummy-search-form" id="yummySearchForm" style="display: flex; align-items: center; background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 9999px; padding: 0.5rem 1.25rem; box-shadow: 0 2px 10px rgba(0,0,0,0.06); width: 100%;">
+                    <svg class="y-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4a1c17" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-right: 0.75rem;">
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
                     <input type="text" name="q" placeholder="Tìm theo tên món" value="<?= e($_GET['q'] ?? '') ?>" autocomplete="off" style="border: none; background: transparent; outline: none; font-size: 0.95rem; color: #1e293b; width: 100%; font-weight: 500;">
-                    <button type="submit" class="btn-yummy-search-go" title="Tìm kiếm" aria-label="Tìm kiếm" style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: #4a1c17; border: none; color: #ffffff; cursor: pointer; flex-shrink: 0; margin-left: 0.5rem; transition: all 0.2s; box-shadow: 0 2px 6px rgba(74, 28, 23, 0.35);">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
-                    </button>
                 </form>
             </div>
         </div>
@@ -345,13 +339,10 @@ if (isset($_SESSION['user_id'])) {
                         </a>
                     <?php endif; ?>
 
-                    <!-- Notification Bell (Khớp 100% Ảnh 3: Hình chiếc chuông đen đặc, có quả lắc, pre-rendered dữ liệu không bao giờ bị mất) -->
+                    <!-- Notification Bell (Sử dụng trực tiếp ảnh bell icon chuẩn của người dùng, tương phản cao, không bao giờ bị lỗi) -->
                     <div class="notification-wrapper" style="position: relative;">
-                        <button type="button" class="notification-btn" id="btnNotifications" title="Thông báo" aria-label="Thông báo" onclick="toggleNotificationsDropdown(event)" style="width: 38px; height: 38px; border-radius: 50%; background: #ffffff; border: 2px solid #ea580c; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.12); flex-shrink: 0;">
-                            <svg class="cookio-bell-icon" width="20" height="20" viewBox="0 0 24 24" fill="#3e1713" xmlns="http://www.w3.org/2000/svg" style="display: block !important; width: 20px !important; height: 20px !important; pointer-events: none; fill: #3e1713 !important;">
-                                <path fill="#3e1713" d="M12 2a2 2 0 0 0-2 2c0 .24.04.47.11.68C6.98 5.72 4.5 8.87 4.5 12.65v4.2l-1.85 1.85c-.41.41-.12 1.12.46 1.12h17.78c.58 0 .87-.71.46-1.12L19.5 16.85v-4.2c0-3.78-2.48-6.93-5.61-7.97.07-.21.11-.44.11-.68a2 2 0 0 0-2-2z"/>
-                                <path fill="#3e1713" d="M9.5 21a2.5 2.5 0 0 0 5 0h-5z"/>
-                            </svg>
+                        <button type="button" class="notification-btn" id="btnNotifications" title="Thông báo" aria-label="Thông báo" onclick="toggleNotificationsDropdown(event)" style="width: 38px; height: 38px; border-radius: 50%; background: #ffffff; border: 2px solid #ea580c; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.12); flex-shrink: 0; padding: 0;">
+                            <img src="<?= BASE_URL ?>/assets/images/notification-bell.png?v=<?= file_exists(__DIR__ . '/../assets/images/notification-bell.png') ? filemtime(__DIR__ . '/../assets/images/notification-bell.png') : '20261106' ?>" alt="Thông báo" width="20" height="20" style="display: block; width: 20px; height: 20px; object-fit: contain; pointer-events: none;">
                             <span class="notif-badge" id="notifBadge" style="<?= $headerUnreadCount > 0 ? 'display: flex;' : 'display: none;' ?>">
                                 <?= $headerUnreadCount > 9 ? '9+' : $headerUnreadCount ?>
                             </span>
