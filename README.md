@@ -11,7 +11,7 @@
 
 ---
 
-## 🏢 I. TỔNG QUAN GIẢI PHÁP & ĐỊNH VỊ DOANH NGHIỆP
+##  I. TỔNG QUAN GIẢI PHÁP & ĐỊNH VỊ DOANH NGHIỆP
 
 Trong bối cảnh chuyển đổi số lĩnh vực đời sống và tiêu dùng gia đình, **Cookio** ra đời nhằm giải quyết toàn diện nhu cầu *"Hôm nay ăn gì?"* bằng việc kết nối dữ liệu ẩm thực chuẩn mực với công nghệ tìm kiếm thông minh và mạng xã hội gắn kết người dùng.
 
@@ -23,7 +23,7 @@ Trong bối cảnh chuyển đổi số lĩnh vực đời sống và tiêu dùn
 
 ---
 
-## ⚡ II. HƯỚNG DẪN TRIỂN KHAI VÀ KHỞI CHẠY (ZERO-CONFIGURATION DEPLOYMENT)
+##  II. HƯỚNG DẪN TRIỂN KHAI VÀ KHỞI CHẠY (ZERO-CONFIGURATION DEPLOYMENT)
 
 Hệ thống được thiết kế theo chuẩn triển khai một bước (**One-Step Run**), người dùng và ban giám khảo không cần cài đặt PHP hay MariaDB trên máy chủ:
 
@@ -53,7 +53,7 @@ docker compose down
 
 ---
 
-## 🎯 III. CÁC PHÂN HỆ VÀ TÍNH NĂNG ĐẠI DIỆN TIÊU BIỂU
+##  III. CÁC PHÂN HỆ VÀ TÍNH NĂNG ĐẠI DIỆN TIÊU BIỂU
 
 ### 1. Giao diện Thanh tìm kiếm Chuyên nghiệp (Executive Search Pill)
 * **Thiết kế công thái học:** Thanh tìm kiếm dạng viên thuốc (Pill-box 9999px) bóng bẩy với icon kính lúp nhận diện màu cam thương hiệu, cho phép nhập liệu trực tiếp không bị che khuất và nút điều hướng gửi yêu cầu tức thì.
@@ -93,7 +93,7 @@ docker compose down
 
 ---
 
-## 👥 IV. DANH MỤC TÀI KHOẢN TRẢI NGHIỆM ĐỀ XUẤT
+##  IV. DANH MỤC TÀI KHOẢN TRẢI NGHIỆM ĐỀ XUẤT
 
 Tất cả tài khoản trong hệ thống đều được cấu hình hỗ trợ mật khẩu tiện ích: **`1`** (hoặc `123456`):
 
@@ -110,7 +110,7 @@ Tất cả tài khoản trong hệ thống đều được cấu hình hỗ tr�
 
 ---
 
-## 🎬 V. QUY TRÌNH THỬ NGHIỆM VÀ ĐÁNH GIÁ (DEMO WALKTHROUGH)
+##  V. QUY TRÌNH THỬ NGHIỆM VÀ ĐÁNH GIÁ (DEMO WALKTHROUGH)
 
 1. **Bước 1 - Khởi động một chạm:** Chạy `docker compose up -d` và mở trình duyệt tại `http://localhost:8088`.
 2. **Bước 2 - Duyệt trang không rào cản:** Trang chủ mở ngay lập tức ở chế độ khách, hiển thị banner Coverflow, danh mục món ăn và thanh tìm kiếm dạng viên thuốc cao cấp.
@@ -125,7 +125,7 @@ Tất cả tài khoản trong hệ thống đều được cấu hình hỗ tr�
 
 ---
 
-## 🔒 VI. CHÍNH SÁCH BẢO MẬT & AN TOÀN THÔNG TIN (ENTERPRISE SECURITY)
+##  VI. CHÍNH SÁCH BẢO MẬT & AN TOÀN THÔNG TIN (ENTERPRISE SECURITY)
 
 * **Phòng chống CSRF:** 100% các yêu cầu làm thay đổi trạng thái đều được ký xác thực bởi token ngẫu nhiên dựa trên phiên PHP.
 * **Phòng chống SQL Injection:** Triệt để sử dụng kỹ thuật Prepared Statements qua PDO cho toàn bộ tương tác cơ sở dữ liệu.
